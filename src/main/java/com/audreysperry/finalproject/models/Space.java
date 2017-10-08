@@ -14,7 +14,7 @@ public class Space {
     @Column(name="animal_type")
     private String animalType;
 
-    @Column(name="animal_type")
+    @Column(name="animal_number")
     private int animalNumber;
 
     @ManyToOne
