@@ -64,4 +64,15 @@ public class AppController {
         return "redirect:/";
     }
 
+    @RequestMapping(value="/locationSearch", method = RequestMethod.GET)
+    public String locationSearchPage() {
+        return "locationSearch";
+    }
+
+    @RequestMapping(value="/animalSearch", method = RequestMethod.GET)
+    public String animalSearchPage(Model model,
+                                   Principal principal) {
+        model.addAttribute("space", spaceRepo.findAll());
+        return "animalSearch";
+    }
 }

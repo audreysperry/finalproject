@@ -17,10 +17,19 @@ public class Space {
     @Column(name="animal_number")
     private int animalNumber;
 
+    private String notes;
+
     @ManyToOne
     @JoinColumn(name="location_id")
     private Location location;
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     public long getId() {
         return id;
