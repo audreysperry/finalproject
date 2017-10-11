@@ -6,19 +6,49 @@
 </head>
 <body>
 <div  th:replace="fragments/template :: nav"></div>
+
+<!--<div>-->
+    <!--<form action="/animalResults">-->
+        <!--<input type="text" name="search" />-->
+        <!--<input type="submit" value="Filter by State">-->
+    <!--</form>-->
+<!--</div>-->
+<!--<div class="row">-->
+    <!--<div class="col-sm-4" th:each="space: ${space}">-->
+        <!--<div class="card">-->
+            <!--<div class="card-block">-->
+                <!--<h4 class="card-title" th:text="${space.animalType}"></h4>-->
+                <!--<p class="card-text" th:text="${space.notes}"></p>-->
+                <!--<span class="card-text" th:text="${space.hostLocation.city}"></span>-->
+                <!--<span class="card-text">, </span>-->
+                <!--<span class="card-text" th:text="${space.hostLocation.state}"></span>-->
+                <!--<br/>-->
+                <!--<a th:href="@{'/spaceListing/' + ${space.id}}" class="btn btn-primary">View listings</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<!--</div>-->
+
 <div class="row">
-    <div class="col-sm-4" th:each="space: ${space}">
-        <div class="card">
-            <div class="card-block">
-                <h4 class="card-title" th:text="${space.animalType}">Card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+    <a href="/hostLocation/horses">
+        <div class="col-sm-3">
+            <div>Horses</div>
         </div>
+    </a>
+    <div class="col-sm-3">
+        <div>Dogs</div>
     </div>
-
+    <div class="col-sm-3">
+        <div>Cats</div>
+    </div>
+    <div class="col-sm-3">
+        <div>Cows</div>
+    </div>
+    <div class="col-sm-3">
+        <div>Chickens</div>
+    </div>
 </div>
-
 
 </body>
 </html>

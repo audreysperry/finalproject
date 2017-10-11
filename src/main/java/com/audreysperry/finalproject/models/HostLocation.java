@@ -5,8 +5,8 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="locations")
-public class Location {
+@Table(name="host_locations")
+public class HostLocation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,10 @@ public class Location {
     private String city;
 
     private String state;
+
+    private double latitude;
+
+    private double longitude;
 
     @Column(name="zip_code")
     private int zipCode;
@@ -83,5 +87,21 @@ public class Location {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

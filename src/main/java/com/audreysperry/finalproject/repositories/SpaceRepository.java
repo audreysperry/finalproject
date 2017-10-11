@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpaceRepository extends CrudRepository<Space, Long> {
+    Space findAllByAnimalType(String animalType);
 }

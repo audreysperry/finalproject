@@ -1,19 +1,22 @@
 package com.audreysperry.finalproject.controllers;
 
 
-import com.audreysperry.finalproject.models.Location;
+import com.audreysperry.finalproject.googleApi.GeoCodingInterface;
+import com.audreysperry.finalproject.googleApi.GeoCodingResponse;
+import com.audreysperry.finalproject.models.ApiKey;
+import com.audreysperry.finalproject.models.HostLocation;
 import com.audreysperry.finalproject.models.Space;
 import com.audreysperry.finalproject.models.User;
-import com.audreysperry.finalproject.repositories.LocationRepository;
+import com.audreysperry.finalproject.repositories.HostLocationRepository;
 import com.audreysperry.finalproject.repositories.SpaceRepository;
 import com.audreysperry.finalproject.repositories.UserRepository;
+import feign.Feign;
+import feign.gson.GsonDecoder;
+import feign.gson.GsonEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -24,7 +27,7 @@ public class AppController {
     private UserRepository userRepo;
 
     @Autowired
-    private LocationRepository locationRepo;
+    private HostLocationRepository locationRepo;
 
     @Autowired
     private SpaceRepository spaceRepo;
@@ -37,19 +40,39 @@ public class AppController {
 
     @RequestMapping(value="/host", method = RequestMethod.GET)
     public String becomeHost(Model model) {
-        model.addAttribute("location", new Location());
+        model.addAttribute("hostLocation", new HostLocation());
 
         return "addLocation";
     }
 
     @RequestMapping(value="/addLocation", method = RequestMethod.POST)
-    public String addLocation(@ModelAttribute Location location,
+    public String addLocation(@ModelAttribute HostLocation hostLocation,
                               Principal principal,
                               Model model) {
         User currentUser = userRepo.findByUsername(principal.getName());
-        location.setUser(currentUser);
-        locationRepo.save(location);
-        model.addAttribute("location_id", location.getId());
+        hostLocation.setUser(currentUser);
+        String locationString = hostLocation.getStreetAddress() + ", " + hostLocation.getCity() + ", " + hostLocation.getState() + ", " + hostLocation.getZipCode();
+        locationRepo.save(hostLocation);
+
+        ApiKey apiKey = new ApiKey();
+
+        GeoCodingInterface geoCodingInterface = Feign.builder()
+                                                    .decoder(new GsonDecoder())
+                                                    .target(GeoCodingInterface.class, "https://maps.googleapis.com");
+        System.out.println(locationString);
+        System.out.println(apiKey.getAPI_Key());
+        System.out.println("____+++__-----++____++====___");
+        System.out.println(geoCodingInterface.geocodingResponse(locationString, apiKey.getAPI_Key()));
+        GeoCodingResponse response = geoCodingInterface.geocodingResponse(locationString, apiKey.getAPI_Key());
+
+
+        double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
+        double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
+        hostLocation.setLatitude(lat);
+        hostLocation.setLongitude(lng);
+        System.out.println(lat);
+        System.out.println(lng);
+        model.addAttribute("location_id", hostLocation.getId());
         model.addAttribute("space", new Space());
         return "addSpace";
 
@@ -58,8 +81,8 @@ public class AppController {
     @RequestMapping(value="/addSpace", method = RequestMethod.POST)
     public String addSpace(@ModelAttribute Space space,
                            @RequestParam("location_id") long location_id) {
-        Location currentLocation = locationRepo.findOne(location_id);
-        space.setLocation(currentLocation);
+        HostLocation currentHostLocation = locationRepo.findOne(location_id);
+        space.setHostLocation(currentHostLocation);
         spaceRepo.save(space);
         return "redirect:/";
     }
@@ -74,5 +97,12 @@ public class AppController {
                                    Principal principal) {
         model.addAttribute("space", spaceRepo.findAll());
         return "animalSearch";
+    }
+
+    @RequestMapping(value="/location/{animalType}", method=RequestMethod.GET)
+    public String displaySpaceDetails(@PathVariable ("animalType") String animalType,
+                                      Model model) {
+        model.addAttribute("space", spaceRepo.findAllByAnimalType(animalType));
+        return "spaceOptions";
     }
 }

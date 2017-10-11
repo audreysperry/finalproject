@@ -10,10 +10,10 @@
 <h1>Let's get started listing your space</h1>
 <p>Animals are a man's best friend.</p>
 <p>Thank you for doing your part to protect someone else's bff during a time of crisis</p>
-<form action="/addLocation" method="post" th:object="${location}">
+<form action="/addLocation" method="post" th:object="${hostLocation}">
     <p>What kind of place do you have for animals?</p>
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <select name="location-select" th:field="*{type}">
+    <select name="hostLocation-select" th:field="*{type}">
         <option value="Farm">I have space on my farm.</option>
         <option value="Home">I have space in my home.</option>
         <option value="Shelter">I work for or run an animal shelter</option>

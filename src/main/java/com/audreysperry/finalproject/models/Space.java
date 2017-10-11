@@ -21,7 +21,7 @@ public class Space {
 
     @ManyToOne
     @JoinColumn(name="location_id")
-    private Location location;
+    private HostLocation hostLocation;
 
     public String getNotes() {
         return notes;
@@ -55,11 +55,11 @@ public class Space {
         this.animalNumber = animalNumber;
     }
 
-    public Location getLocation() {
-        return location;
+    public HostLocation getHostLocation() {
+        return hostLocation;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setHostLocation(HostLocation hostLocation) {
+        this.hostLocation = hostLocation;
     }
 }
