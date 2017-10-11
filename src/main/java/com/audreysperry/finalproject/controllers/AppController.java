@@ -59,12 +59,8 @@ public class AppController {
         GeoCodingInterface geoCodingInterface = Feign.builder()
                                                     .decoder(new GsonDecoder())
                                                     .target(GeoCodingInterface.class, "https://maps.googleapis.com");
-        System.out.println(locationString);
-        System.out.println(currentApiKey);
-        System.out.println("____+++__-----++____++====___");
-        System.out.println(geoCodingInterface.geoCodingResponse(locationString, currentApiKey));
-        GeoCodingResponse response = geoCodingInterface.geoCodingResponse(locationString, apiKey.getAPI_Key());
 
+        GeoCodingResponse response = geoCodingInterface.geoCodingResponse(locationString, apiKey.getAPI_Key());
 
         double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
