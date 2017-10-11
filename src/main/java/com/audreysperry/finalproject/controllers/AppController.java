@@ -52,26 +52,25 @@ public class AppController {
         User currentUser = userRepo.findByUsername(principal.getName());
         hostLocation.setUser(currentUser);
         String locationString = hostLocation.getStreetAddress() + ", " + hostLocation.getCity() + ", " + hostLocation.getState() + ", " + hostLocation.getZipCode();
-        locationRepo.save(hostLocation);
 
         ApiKey apiKey = new ApiKey();
+        String currentApiKey = apiKey.getAPI_Key();
 
         GeoCodingInterface geoCodingInterface = Feign.builder()
                                                     .decoder(new GsonDecoder())
                                                     .target(GeoCodingInterface.class, "https://maps.googleapis.com");
         System.out.println(locationString);
-        System.out.println(apiKey.getAPI_Key());
+        System.out.println(currentApiKey);
         System.out.println("____+++__-----++____++====___");
-        System.out.println(geoCodingInterface.geocodingResponse(locationString, apiKey.getAPI_Key()));
-        GeoCodingResponse response = geoCodingInterface.geocodingResponse(locationString, apiKey.getAPI_Key());
+        System.out.println(geoCodingInterface.geoCodingResponse(locationString, currentApiKey));
+        GeoCodingResponse response = geoCodingInterface.geoCodingResponse(locationString, apiKey.getAPI_Key());
 
 
         double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
         hostLocation.setLatitude(lat);
         hostLocation.setLongitude(lng);
-        System.out.println(lat);
-        System.out.println(lng);
+        locationRepo.save(hostLocation);
         model.addAttribute("location_id", hostLocation.getId());
         model.addAttribute("space", new Space());
         return "addSpace";
