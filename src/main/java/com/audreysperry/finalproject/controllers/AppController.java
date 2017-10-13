@@ -11,6 +11,9 @@ import com.audreysperry.finalproject.repositories.UserRepository;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +56,9 @@ public class AppController {
         Role hostRole = roleRepo.findByName("ROLE_HOST");
         hostLocation.setUser(currentUser);
         currentUser.setRole(hostRole);
+        userRepo.save(currentUser);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(currentUser, currentUser.getPassword(), currentUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         String locationString = hostLocation.getStreetAddress() + ", " + hostLocation.getCity() + ", " + hostLocation.getState() + ", " + hostLocation.getZipCode();
 
         ApiKey apiKey = new ApiKey();
@@ -113,12 +119,39 @@ public class AppController {
         return "viewHostInfo";
     }
 
-    @RequestMapping(value="/location/{locationid}/edit", method = RequestMethod.GET)
+    @RequestMapping(value="/location/{id}/edit", method = RequestMethod.GET)
     public String editLocationInfo(Principal principal,
                                    Model model,
-                                   @PathVariable("locationid") long locationid) {
-        HostLocation currentlocation = locationRepo.findOne(locationid);
-
+                                   @PathVariable("id") long id) {
+        HostLocation currentLocation = locationRepo.findOne(id);
+        model.addAttribute("location", currentLocation);
         return "locationEditForm";
+    }
+
+    @RequestMapping(value="/location/{id}/edit", method = RequestMethod.POST)
+    public String  updateLocationInfo(Principal principal,
+                                    Model model,
+                                    @ModelAttribute HostLocation hostLocation) {
+        User currentUser = userRepo.findByUsername(principal.getName());
+        hostLocation.setUser(currentUser);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(currentUser, currentUser.getPassword(), currentUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String locationString = hostLocation.getStreetAddress() + ", " + hostLocation.getCity() + ", " + hostLocation.getState() + ", " + hostLocation.getZipCode();
+
+        ApiKey apiKey = new ApiKey();
+        GeoCodingInterface geoCodingInterface = Feign.builder()
+                .decoder(new GsonDecoder())
+                .target(GeoCodingInterface.class, "https://maps.googleapis.com");
+
+        GeoCodingResponse response = geoCodingInterface.geoCodingResponse(locationString, apiKey.getAPI_Key());
+
+        double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
+        double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
+        hostLocation.setLatitude(lat);
+        hostLocation.setLongitude(lng);
+        locationRepo.save(hostLocation);
+
+        return "redirect:/editHost";
+
     }
 }
