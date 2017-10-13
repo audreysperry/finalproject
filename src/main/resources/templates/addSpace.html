@@ -6,7 +6,8 @@
 </head>
 <body>
 <div th:replace="fragments/template :: nav"></div>
-<div class="wrapper">
+<div th:replace="fragments/template :: navHost"></div>
+<div class="wrap">
     <form action="/addSpace" method="post" th:object="${space}" class="form-horizontal">
         <fieldset>
             <legend>What kind of place do you have for animals?</legend>
@@ -19,11 +20,11 @@
                         <option value="Chickens">Chickens</option>
                         <option value="Cows">Cows</option>
                         <option value="Horses">Horses</option>
-                        <option value="OtherFarm">Other Farm Animals</option>
+                        <option value="Other Farm Animals">Other Farm Animals</option>
                         <option value="Birds">Birds</option>
                         <option value="Cats">Cats</option>
                         <option value="Dogs">Dogs</option>
-                        <option value="OtherDomestic">Other Domestic Animals</option>
+                        <option value="Other Domestic Animals">Other Domestic Animals</option>
                     </select>
                 </div>
                 <br/>
@@ -121,5 +122,6 @@
         <!--</div>-->
     <!--</fieldset>-->
 <!--</form>-->
+<span th:replace="fragments/template :: js"></span>
 </body>
 </html>

@@ -275,7 +275,17 @@
   opacity:0.2;
 }
 
-.wrapper {
+.wrap {
   padding: 50px 100px;
+}
+
+.animalItem {
+  border: 1px solid #000;
+  padding: 50px;
+  margin: 25px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+
 }
 

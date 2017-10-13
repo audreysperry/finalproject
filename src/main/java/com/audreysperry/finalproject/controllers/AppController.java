@@ -3,11 +3,9 @@ package com.audreysperry.finalproject.controllers;
 
 import com.audreysperry.finalproject.googleApi.GeoCodingInterface;
 import com.audreysperry.finalproject.googleApi.GeoCodingResponse;
-import com.audreysperry.finalproject.models.ApiKey;
-import com.audreysperry.finalproject.models.HostLocation;
-import com.audreysperry.finalproject.models.Space;
-import com.audreysperry.finalproject.models.User;
+import com.audreysperry.finalproject.models.*;
 import com.audreysperry.finalproject.repositories.HostLocationRepository;
+import com.audreysperry.finalproject.repositories.RoleRepository;
 import com.audreysperry.finalproject.repositories.SpaceRepository;
 import com.audreysperry.finalproject.repositories.UserRepository;
 import feign.Feign;
@@ -32,6 +30,9 @@ public class AppController {
     @Autowired
     private SpaceRepository spaceRepo;
 
+    @Autowired
+    private RoleRepository roleRepo;
+
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String homePage() {
 
@@ -50,7 +51,9 @@ public class AppController {
                               Principal principal,
                               Model model) {
         User currentUser = userRepo.findByUsername(principal.getName());
+        Role hostRole = roleRepo.findByName("ROLE_HOST");
         hostLocation.setUser(currentUser);
+        currentUser.setRole(hostRole);
         String locationString = hostLocation.getStreetAddress() + ", " + hostLocation.getCity() + ", " + hostLocation.getState() + ", " + hostLocation.getZipCode();
 
         ApiKey apiKey = new ApiKey();
@@ -88,16 +91,18 @@ public class AppController {
     }
 
     @RequestMapping(value="/animalSearch", method = RequestMethod.GET)
-    public String animalSearchPage(Model model,
-                                   Principal principal) {
-        model.addAttribute("space", spaceRepo.findAll());
+    public String animalSearchPage() {
         return "animalSearch";
     }
 
     @RequestMapping(value="/location/{animalType}", method=RequestMethod.GET)
-    public String displaySpaceDetails(@PathVariable ("animalType") String animalType,
-                                      Model model) {
-        model.addAttribute("space", spaceRepo.findAllByAnimalType(animalType));
+    public String displaySpaceDetails(
+            @PathVariable ("animalType") String animalType,
+                                      Model model
+    ) {
+        System.out.println(animalType);
+        // Space x = spaceRepo.findAllByAnimalType(animalType);
+        model.addAttribute("spaces", spaceRepo.findAllByAnimalType(animalType));
         return "spaceOptions";
     }
 }

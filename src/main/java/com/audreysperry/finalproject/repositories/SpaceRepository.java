@@ -5,7 +5,9 @@ import com.audreysperry.finalproject.models.Space;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SpaceRepository extends CrudRepository<Space, Long> {
-    Space findAllByAnimalType(String animalType);
+    List<Space> findAllByAnimalType(String animalType);
 }
