@@ -10,7 +10,6 @@ import com.audreysperry.finalproject.repositories.SpaceRepository;
 import com.audreysperry.finalproject.repositories.UserRepository;
 import feign.Feign;
 import feign.gson.GsonDecoder;
-import feign.gson.GsonEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,8 +56,6 @@ public class AppController {
         String locationString = hostLocation.getStreetAddress() + ", " + hostLocation.getCity() + ", " + hostLocation.getState() + ", " + hostLocation.getZipCode();
 
         ApiKey apiKey = new ApiKey();
-        String currentApiKey = apiKey.getAPI_Key();
-
         GeoCodingInterface geoCodingInterface = Feign.builder()
                                                     .decoder(new GsonDecoder())
                                                     .target(GeoCodingInterface.class, "https://maps.googleapis.com");
@@ -101,8 +98,27 @@ public class AppController {
                                       Model model
     ) {
         System.out.println(animalType);
-        // Space x = spaceRepo.findAllByAnimalType(animalType);
         model.addAttribute("spaces", spaceRepo.findAllByAnimalType(animalType));
         return "spaceOptions";
+    }
+
+    @RequestMapping(value="/editHost", method = RequestMethod.GET)
+    public String viewHostInfo(Principal principal,
+                               Model model) {
+        User currentUser = userRepo.findByUsername(principal.getName());
+        HostLocation location = locationRepo.findByUser(currentUser);
+        model.addAttribute("location", location);
+        model.addAttribute("user", currentUser);
+
+        return "viewHostInfo";
+    }
+
+    @RequestMapping(value="/location/{locationid}/edit", method = RequestMethod.GET)
+    public String editLocationInfo(Principal principal,
+                                   Model model,
+                                   @PathVariable("locationid") long locationid) {
+        HostLocation currentlocation = locationRepo.findOne(locationid);
+
+        return "locationEditForm";
     }
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/template :: head">
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments/template :: nav"></div>
+
+<div class="container">
+    <span th:text="${location.streetAddress}"></span>
+    <br/>
+    <span th:text="${location.city}"></span>
+    <span>, </span>
+    <span th:text="${location.state}"></span>
+    <form th:action="@{'/location/' + ${location.id} + '/edit'}" method="get">
+        <input type="submit" value="Edit" />
+    </form>
+</div>
+
+
+
+<span th:replace="fragments/template :: js"></span>
+</body>
+</html>
