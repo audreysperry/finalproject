@@ -10,6 +10,7 @@
 <div class="card" th:each="space : ${spaces}">
     <div class="card-block">
         <div class="card-title"> <span th:text="${space.animalNumber}"></span><span> </span><span th:text="${space.animalType}"></span></div>
+        <span th:text="${space.hostLocation.type}"></span>
         <div class="card-subtitle mb-2 text-muted"><span th:text="${space.hostLocation.city}"></span><span>, </span><span th:text="${space.hostLocation.state}"></span></div>
         <p class="card-text" th:text="${space.notes}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         <a href="#" class="card-link">Send host a Message</a>

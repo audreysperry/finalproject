@@ -6,7 +6,11 @@ import org.apache.catalina.Host;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface HostLocationRepository extends CrudRepository<HostLocation, Long> {
     HostLocation findByUser(User user);
+
+    List<HostLocation> findAllByType(String shelterType);
 }

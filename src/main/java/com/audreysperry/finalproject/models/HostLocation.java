@@ -2,6 +2,7 @@ package com.audreysperry.finalproject.models;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -31,6 +32,9 @@ public class HostLocation {
     @OneToOne
     @JoinColumn(name="user_id")
     private User user;
+
+    @OneToMany(mappedBy = "hostLocation", cascade = CascadeType.ALL)
+    private List<Space> spaces;
 
 
     public long getId() {
@@ -103,5 +107,13 @@ public class HostLocation {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public List<Space> getSpaces() {
+        return spaces;
+    }
+
+    public void setSpaces(List<Space> spaces) {
+        this.spaces = spaces;
     }
 }

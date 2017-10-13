@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/template :: head">
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments/template :: nav"></div>
+
+<h1 th:text="${type}"></h1>
+<div class="card" th:each="location : ${locations}">
+    <div class="card-block">
+        <div class="card-title"> <span th:text="${location.city}"></span><span th:text="${location.state}"> </span></div>
+        <h5>Availability:</h5>
+        <ul>
+        <li th:each="space : ${location.spaces}">
+            <span th:text="${space.animalNumber}"></span>
+            <span> </span>
+            <span th:text="${space.animalType}"></span>
+            <br/>
+            <span th:text="${space.notes}"></span>
+        </li>
+        </ul>
+        <a href="#" class="card-link">Send host a Message</a>
+    </div>
+</div>
+
+
+<span th:replace="fragments/template :: js"></span>
+</body>
+</html>
