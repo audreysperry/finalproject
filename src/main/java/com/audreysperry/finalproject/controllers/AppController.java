@@ -8,6 +8,7 @@ import com.audreysperry.finalproject.repositories.HostLocationRepository;
 import com.audreysperry.finalproject.repositories.RoleRepository;
 import com.audreysperry.finalproject.repositories.SpaceRepository;
 import com.audreysperry.finalproject.repositories.UserRepository;
+import com.sun.org.apache.regexp.internal.RE;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,7 +116,6 @@ public class AppController {
     public String displayShelterSearch(Model model,
                                        Principal principal,
                                        @PathVariable("shelterType") String shelterType) {
-        System.out.println(shelterType);
         List<HostLocation> hostLocations = locationRepo.findAllByType(shelterType);
         model.addAttribute("type", shelterType);
         model.addAttribute("locations", hostLocations);
@@ -132,10 +132,19 @@ public class AppController {
     @RequestMapping(value="/location/{animalType}", method=RequestMethod.GET)
     public String displaySpaceDetails(
             @PathVariable ("animalType") String animalType,
-                                      Model model
-    ) {
-        System.out.println(animalType);
+                                      Model model) {
         model.addAttribute("spaces", spaceRepo.findAllByAnimalType(animalType));
+        model.addAttribute("animalType", animalType);
+        return "spaceOptions";
+    }
+
+    @RequestMapping(value="/stateResults", method = RequestMethod.GET)
+    public String filterByState(Model model,
+                                @RequestParam("search") String state,
+                                @RequestParam("animalType") String animalType) {
+        List<Space> spaces = spaceRepo.findAllByAnimalTypeAndAndHostLocation_State(animalType, state);
+        model.addAttribute("spaces", spaces);
+        model.addAttribute("animalType", animalType);
         return "spaceOptions";
     }
 
