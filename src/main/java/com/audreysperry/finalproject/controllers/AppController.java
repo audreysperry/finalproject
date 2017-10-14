@@ -140,9 +140,11 @@ public class AppController {
 
     @RequestMapping(value="/stateResults", method = RequestMethod.GET)
     public String filterByState(Model model,
-                                @RequestParam("search") String state,
+                                @RequestParam("state") String state,
                                 @RequestParam("animalType") String animalType) {
-        List<Space> spaces = spaceRepo.findAllByAnimalTypeAndAndHostLocation_State(animalType, state);
+        System.out.println(state);
+        List<Space> spaces = spaceRepo.findAllByAnimalTypeAndHostLocation_State(animalType, state);
+        System.out.println("these are spaces: " + spaces);
         model.addAttribute("spaces", spaces);
         model.addAttribute("animalType", animalType);
         return "spaceOptions";
