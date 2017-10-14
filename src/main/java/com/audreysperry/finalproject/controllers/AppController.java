@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -104,6 +105,44 @@ public class AppController {
 
     @RequestMapping(value="/locationSearch", method = RequestMethod.GET)
     public String locationSearchPage() {
+        return "locationSearch";
+    }
+
+    @RequestMapping(value="/locationSearchResults", method = RequestMethod.GET)
+    public String showLocationSearchResults(Model model,
+                                            @RequestParam("city") String city,
+                                            @RequestParam("state") String state) {
+        String location = city + ", " + state;
+
+        ApiKey apiKey = new ApiKey();
+        GeoCodingInterface geoCodingInterface = Feign.builder()
+                .decoder(new GsonDecoder())
+                .target(GeoCodingInterface.class, "https://maps.googleapis.com");
+
+        GeoCodingResponse response = geoCodingInterface.geoCodingResponse(location, apiKey.getAPI_Key());
+
+        double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
+        double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
+
+        double latMax = lat + 1;
+        double latMin = lat -1;
+
+        double lngMax = lng + 1;
+        double lngMin = lng -1;
+
+        List<HostLocation> hostLocations = new ArrayList<HostLocation>() {
+        };
+
+        List<HostLocation> tempLocations = locationRepo.findAll();
+
+        for (HostLocation tempLocation : tempLocations) {
+            double tempLat = tempLocation.getLatitude();
+            double tempLng = tempLocation.getLongitude();
+            if(tempLat >= latMin && tempLat <= latMax && tempLng >= lngMin && tempLng <= lngMax) {
+                hostLocations.add(tempLocation);
+            }
+        }
+        model.addAttribute("locations", hostLocations);
         return "locationSearch";
     }
 

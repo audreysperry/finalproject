@@ -13,4 +13,6 @@ public interface HostLocationRepository extends CrudRepository<HostLocation, Lon
     HostLocation findByUser(User user);
 
     List<HostLocation> findAllByType(String shelterType);
+
+    List<HostLocation> findAll();
 }
