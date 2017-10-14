@@ -11,6 +11,7 @@ import com.audreysperry.finalproject.repositories.UserRepository;
 import com.sun.org.apache.regexp.internal.RE;
 import feign.Feign;
 import feign.gson.GsonDecoder;
+import org.apache.catalina.Host;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -205,8 +206,14 @@ public class AppController {
                                    Model model,
                                    @PathVariable("id") long id) {
         HostLocation currentLocation = locationRepo.findOne(id);
-        model.addAttribute("location", currentLocation);
-        return "locationEditForm";
+        User currentUser = userRepo.findByUsername(principal.getName());
+        if (currentUser == currentLocation.getUser()) {
+            model.addAttribute("location", currentLocation);
+            return "locationEditForm";
+        } else {
+            return "home";
+        }
+
     }
 
     @RequestMapping(value="/location/{id}/edit", method = RequestMethod.POST)
@@ -239,11 +246,18 @@ public class AppController {
     public String editSpaceInfo(Principal principal,
                                 Model model,
                                 @PathVariable("id") long id) {
+        User currentUser = userRepo.findByUsername(principal.getName());
         Space space = spaceRepo.findOne(id);
-        model.addAttribute("space", space);
-        model.addAttribute("location", space.getHostLocation().getId());
+        HostLocation hostLocation = space.getHostLocation();
 
-        return "spaceEditForm";
+        if (currentUser == hostLocation.getUser()) {
+            model.addAttribute("space", space);
+            model.addAttribute("location", space.getHostLocation().getId());
+
+            return "spaceEditForm";
+        } else {
+            return "home";
+        }
     }
 
     @RequestMapping(value="/space/{id}/edit", method = RequestMethod.POST)
