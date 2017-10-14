@@ -11,6 +11,5 @@ import java.util.List;
 public interface SpaceRepository extends CrudRepository<Space, Long> {
     List<Space> findAllByAnimalType(String animalType);
     List<Space> findAllByAnimalTypeAndHostLocation_State(String animalType, String state);
-    List<Space> findAllByAnimalTypeAndHostLocationState(String animalType, String state);
-    List<Space> findAllByHostLocation_State(String state);
+
 }
