@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/template :: head">
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments/template :: nav"></div>
+
+<h1>HI</h1>
+<div th:each="thread : ${threads}">
+    <h1>View Message Between you and</h1>
+    <h1 th:text="${thread.hostName}"></h1>
+
+</div>
+<span th:replace="fragments/template :: js"></span>
+</body>
+</html>

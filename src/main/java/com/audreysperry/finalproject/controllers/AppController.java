@@ -4,6 +4,7 @@ package com.audreysperry.finalproject.controllers;
 import com.audreysperry.finalproject.googleApi.GeoCodingInterface;
 import com.audreysperry.finalproject.googleApi.GeoCodingResponse;
 import com.audreysperry.finalproject.models.*;
+import com.audreysperry.finalproject.models.Thread;
 import com.audreysperry.finalproject.repositories.*;
 import feign.Feign;
 import feign.gson.GsonDecoder;
@@ -37,6 +38,9 @@ public class AppController {
 
     @Autowired
     private MessageRepository messageRepo;
+
+    @Autowired
+    private ThreadRepository threadRepo;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String homePage() {
@@ -300,6 +304,11 @@ public class AppController {
                              @PathVariable("user_id") long user_id) {
 
        User host = userRepo.findOne(user_id);
+       Thread thread = new Thread();
+       thread.setHostName(host.getUsername());
+       thread.setGuestName(principal.getName());
+       threadRepo.save(thread);
+       message.setThread(thread);
        User guest = userRepo.findByUsername(principal.getName());
        message.setAuthorUsername(guest.getUsername());
        message.setRecipient(host.getUsername());
@@ -311,5 +320,24 @@ public class AppController {
 
         return "home";
 
+    }
+
+    @RequestMapping(value="/messages", method = RequestMethod.GET)
+    public String showMessageBoard(Principal principal,
+                                   Model model) {
+        User user = userRepo.findByUsername(principal.getName());
+        Role role = user.getRole();
+        String roleName = role.getName();
+        System.out.println(roleName);
+
+        if (role.getName() == "ROLE_GENERAL") {
+            model.addAttribute("threads", threadRepo.findAllByGuestName(principal.getName()));
+        } else {
+            model.addAttribute("threads", threadRepo.findAllByHostName(principal.getName()));
+        }
+        System.out.println(principal.getName());
+        System.out.println(threadRepo.findAllByGuestName(principal.getName()));
+        model.addAttribute("threads", threadRepo.findAllByGuestName(principal.getName()));
+        return "messages/messageBoard";
     }
 }
