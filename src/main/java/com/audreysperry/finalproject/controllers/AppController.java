@@ -4,14 +4,9 @@ package com.audreysperry.finalproject.controllers;
 import com.audreysperry.finalproject.googleApi.GeoCodingInterface;
 import com.audreysperry.finalproject.googleApi.GeoCodingResponse;
 import com.audreysperry.finalproject.models.*;
-import com.audreysperry.finalproject.repositories.HostLocationRepository;
-import com.audreysperry.finalproject.repositories.RoleRepository;
-import com.audreysperry.finalproject.repositories.SpaceRepository;
-import com.audreysperry.finalproject.repositories.UserRepository;
-import com.sun.org.apache.regexp.internal.RE;
+import com.audreysperry.finalproject.repositories.*;
 import feign.Feign;
 import feign.gson.GsonDecoder;
-import org.apache.catalina.Host;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -38,6 +34,9 @@ public class AppController {
 
     @Autowired
     private RoleRepository roleRepo;
+
+    @Autowired
+    private MessageRepository messageRepo;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String homePage() {
@@ -272,5 +271,45 @@ public class AppController {
         return "redirect:/editHost";
     }
 
+    @RequestMapping(value="/addLocationImg/{locationid}", method = RequestMethod.POST)
+    public String addLocationImg(Principal principal,
+                                 @PathVariable("locationid") long locationid,
+                                 Model model,
+                                 @RequestParam("locationImage") String image) {
+        System.out.println(image);
+        return "editHost";
+    }
 
+    @RequestMapping(value="/messageHost/{user_id}", method= RequestMethod.GET)
+    public String messageHostForm(@PathVariable("user_id") long user_id,
+                                  Model model,
+                                  Principal principal) {
+        User host = userRepo.findOne(user_id);
+        User guest = userRepo.findByUsername(principal.getName());
+
+        model.addAttribute("host", host);
+        model.addAttribute("guest", guest);
+        model.addAttribute("message", new Message());
+
+        return "/messages/messageHostForm";
+    }
+
+    @RequestMapping(value="/addMessage/{user_id}", method = RequestMethod.POST)
+    public String addMessage(@ModelAttribute Message message,
+                             Principal principal,
+                             @PathVariable("user_id") long user_id) {
+
+       User host = userRepo.findOne(user_id);
+       User guest = userRepo.findByUsername(principal.getName());
+       message.setAuthorUsername(guest.getUsername());
+       message.setRecipient(host.getUsername());
+       message.setDate(new Date());
+       message.setReceiver(host);
+       message.setSender(guest);
+       messageRepo.save(message);
+
+
+        return "home";
+
+    }
 }

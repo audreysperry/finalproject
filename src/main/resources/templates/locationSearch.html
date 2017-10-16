@@ -78,7 +78,7 @@
                 <span th:text="${space.notes}"></span>
             </li>
         </ul>
-        <a href="#" class="card-link">Send host a Message</a>
+        <a th:href="@{'/messageHost/' + ${location.user.id}}" class="card-link">Send host a Message</a>
     </div>
 </div>
 <span th:replace="fragments/template :: js"></span>

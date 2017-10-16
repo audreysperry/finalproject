@@ -18,8 +18,13 @@
         <input type="submit" value="Edit" />
     </form>
 </div>
-
-
+<h1>Add an image of your space</h1>
+<form method="POST" enctype="multipart/form-data" th:action="@{'/addLocationImg/' + ${location.id}}">
+    <table>
+        <tr><td>File to upload:</td><td><input type="file" name="locationImage" /></td></tr>
+        <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+    </table>
+</form>
 <div class="container">
     <h1>SPACES</h1>
     <div th:each="space : ${location.spaces}">
