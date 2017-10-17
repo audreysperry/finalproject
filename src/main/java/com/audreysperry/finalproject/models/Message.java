@@ -25,7 +25,6 @@ public class Message {
     @Column(name="message_read")
     private boolean messageRead;
 
-
     @ManyToOne
     @JoinColumn(name="sender_id")
     private User sender;

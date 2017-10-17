@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="fragments/template :: head">
     <meta charset="UTF-8"/>
     <title>Title</title>
@@ -10,10 +10,12 @@
 <h1>HI</h1>
 <div th:each="thread : ${threads}">
     <a th:href="@{'/thread/' + ${thread.id}}">
-    <h1>View Message Between you and</h1>
-
-    <h1 th:text="${thread.hostName}"></h1>
-        </a>
+    <span>View messages between you and</span>
+    <span sec:authorize="hasRole('ROLE_HOST')" th:text="${thread.guest.firstName}"></span>
+        <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
+    </a>
+    <span>Unread messages: </span>
+    <span th:text=""></span>
 </div>
 <span th:replace="fragments/template :: js"></span>
 </body>

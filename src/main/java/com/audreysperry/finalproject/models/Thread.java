@@ -2,6 +2,7 @@ package com.audreysperry.finalproject.models;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -76,5 +77,19 @@ public class Thread {
 
     public void setGuest(User guest) {
         this.guest = guest;
+    }
+
+    public List<Message> getUnreadMessages() {
+        List<Message> unreadMessages = new ArrayList<Message>() {};
+
+        List<Message> allMessages = getMessages();
+        for (Message message : allMessages
+             ) {
+            if (message.isMessageRead() == false) {
+                unreadMessages.add(message);
+            }
+
+        }
+        return unreadMessages;
     }
 }
