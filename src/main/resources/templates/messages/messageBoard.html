@@ -15,7 +15,7 @@
         <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
     </a>
     <span>Unread messages: </span>
-    <span th:text=""></span>
+    <span th:text="${thread.getUnreadMessages(#authentication.getPrincipal())}"></span>
 </div>
 <span th:replace="fragments/template :: js"></span>
 </body>

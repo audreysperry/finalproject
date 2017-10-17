@@ -1,23 +1,14 @@
 package com.audreysperry.finalproject.controllers;
 
 
-import com.audreysperry.finalproject.googleApi.GeoCodingInterface;
-import com.audreysperry.finalproject.googleApi.GeoCodingResponse;
 import com.audreysperry.finalproject.models.*;
 import com.audreysperry.finalproject.models.Thread;
 import com.audreysperry.finalproject.repositories.*;
-import feign.Feign;
-import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,15 +17,6 @@ public class MessagingController {
 
     @Autowired
     private UserRepository userRepo;
-
-    @Autowired
-    private HostLocationRepository locationRepo;
-
-    @Autowired
-    private SpaceRepository spaceRepo;
-
-    @Autowired
-    private RoleRepository roleRepo;
 
     @Autowired
     private MessageRepository messageRepo;
@@ -47,8 +29,6 @@ public class MessagingController {
 
         return "home";
     }
-
-
 
     @RequestMapping(value="/messageHost/{user_id}", method= RequestMethod.GET)
     public String messageHostForm(@PathVariable("user_id") long user_id,
@@ -96,7 +76,6 @@ public class MessagingController {
         User user = userRepo.findByUsername(principal.getName());
         Role role = user.getRole();
         String roleName = role.getName();
-        System.out.println(roleName);
 
         if (roleName.equals("ROLE_GENERAL")) {
             model.addAttribute("threads", threadRepo.findAllByGuest(user));
@@ -105,7 +84,7 @@ public class MessagingController {
             model.addAttribute("threads", threadRepo.findAllByHost(user));
 
         }
-        System.out.println(model);
+
         return "messages/messageBoard";
     }
 
@@ -114,11 +93,18 @@ public class MessagingController {
                                   Model model,
                                   @PathVariable("thread_id") long thread_id) {
         Thread currentThread = threadRepo.findOne(thread_id);
+        User loggedInUser = userRepo.findByUsername(principal.getName());
         List<Message> currentMessages = currentThread.getMessages();
+        for (Message message: currentMessages
+             ) { if(message.getReceiver() == loggedInUser)
+            message.setMessageRead(true);
+             messageRepo.save(message);
 
+        }
         model.addAttribute("thread", currentThread);
         model.addAttribute("messages", currentMessages);
         model.addAttribute("message", new Message());
+        model.addAttribute("principal", principal);
         return "messages/messageThreadDetails";
     }
 

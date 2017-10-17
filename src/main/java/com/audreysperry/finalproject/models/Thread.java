@@ -2,6 +2,7 @@ package com.audreysperry.finalproject.models;
 
 
 import javax.persistence.*;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,6 @@ public class Thread {
     @ManyToOne
     @JoinColumn(name="guest_id")
     private User guest;
-
 
     @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
     private List<Message> messages;
@@ -79,17 +79,20 @@ public class Thread {
         this.guest = guest;
     }
 
-    public List<Message> getUnreadMessages() {
+    public int getUnreadMessages(org.springframework.security.core.userdetails.User user) {
         List<Message> unreadMessages = new ArrayList<Message>() {};
-
         List<Message> allMessages = getMessages();
         for (Message message : allMessages
-             ) {
-            if (message.isMessageRead() == false) {
+                ) {
+            System.out.println(message.getReceiver().getUsername());
+            System.out.println(user);
+            if (message.isMessageRead() == false && user.getUsername().equals(message.getReceiver().getUsername())) {
                 unreadMessages.add(message);
             }
-
+            System.out.println(unreadMessages);
+            System.out.println(unreadMessages.size());
         }
-        return unreadMessages;
+        return unreadMessages.size();
     }
+
 }

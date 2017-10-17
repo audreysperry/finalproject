@@ -23,8 +23,6 @@ import java.util.List;
 @Controller
 public class SearchController {
 
-    @Autowired
-    private UserRepository userRepo;
 
     @Autowired
     private HostLocationRepository locationRepo;
@@ -32,19 +30,10 @@ public class SearchController {
     @Autowired
     private SpaceRepository spaceRepo;
 
-    @Autowired
-    private RoleRepository roleRepo;
-
-    @Autowired
-    private MessageRepository messageRepo;
-
-    @Autowired
-    private ThreadRepository threadRepo;
-
 
     @RequestMapping(value="/locationSearch", method = RequestMethod.GET)
     public String locationSearchPage() {
-        return "locationSearch";
+        return "/searches/locationSearch";
     }
 
     @RequestMapping(value="/locationSearchResults", method = RequestMethod.GET)
@@ -82,12 +71,12 @@ public class SearchController {
             }
         }
         model.addAttribute("locations", hostLocations);
-        return "locationSearch";
+        return "/searches/locationSearch";
     }
 
     @RequestMapping(value="/shelterSearch", method = RequestMethod.GET)
     public String shelterSearchPage() {
-        return "shelterSearch";
+        return "/searches/shelterSearch";
     }
 
     @RequestMapping(value="/search/{shelterType}", method = RequestMethod.GET)
@@ -98,13 +87,13 @@ public class SearchController {
         model.addAttribute("type", shelterType);
         model.addAttribute("locations", hostLocations);
 
-        return "shelterOptions";
+        return "searches/shelterOptions";
 
     }
 
     @RequestMapping(value="/animalSearch", method = RequestMethod.GET)
     public String animalSearchPage() {
-        return "animalSearch";
+        return "/searches/animalSearch";
     }
 
     @RequestMapping(value="/location/{animalType}", method=RequestMethod.GET)
@@ -113,7 +102,7 @@ public class SearchController {
             Model model) {
         model.addAttribute("spaces", spaceRepo.findAllByAnimalType(animalType));
         model.addAttribute("animalType", animalType);
-        return "spaceOptions";
+        return "/searches/spaceOptions";
     }
 
     @RequestMapping(value="/stateResults", method = RequestMethod.GET)
@@ -125,6 +114,6 @@ public class SearchController {
         System.out.println("these are spaces: " + spaces);
         model.addAttribute("spaces", spaces);
         model.addAttribute("animalType", animalType);
-        return "spaceOptions";
+        return "/searches/spaceOptions";
     }
 }
