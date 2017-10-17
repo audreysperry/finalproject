@@ -22,6 +22,9 @@ public class Message {
 
     private String recipient;
 
+    @Column(name="message_read")
+    private boolean messageRead;
+
 
     @ManyToOne
     @JoinColumn(name="sender_id")
@@ -97,5 +100,13 @@ public class Message {
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
+    }
+
+    public boolean isMessageRead() {
+        return messageRead;
+    }
+
+    public void setMessageRead(boolean messageRead) {
+        this.messageRead = messageRead;
     }
 }

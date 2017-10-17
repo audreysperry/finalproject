@@ -329,17 +329,15 @@ public class AppController {
         Role role = user.getRole();
         String roleName = role.getName();
         System.out.println(roleName);
-        Boolean host = false;
 
-        if (role.getName() == "ROLE_GENERAL") {
-            model.addAttribute("threads", threadRepo.findAllByGuestName(principal.getName()));
+        if (roleName.equals("ROLE_GENERAL")) {
+            model.addAttribute("threads", threadRepo.findAllByGuest(user));
+
         } else {
-            model.addAttribute("threads", threadRepo.findAllByHostName(principal.getName()));
-            host = true;
+            model.addAttribute("threads", threadRepo.findAllByHost(user));
+
         }
-        System.out.println(principal.getName());
-        System.out.println(threadRepo.findAllByHostName(principal.getName()));
-        model.addAttribute("host", host);
+        System.out.println(model);
         return "messages/messageBoard";
     }
 
@@ -350,8 +348,42 @@ public class AppController {
         Thread currentThread = threadRepo.findOne(thread_id);
         List<Message> currentMessages = currentThread.getMessages();
 
-
+        model.addAttribute("thread", currentThread);
         model.addAttribute("messages", currentMessages);
+        model.addAttribute("message", new Message());
         return "messages/messageThreadDetails";
+    }
+
+    @RequestMapping(value="replyMessage/{thread_id}", method = RequestMethod.POST)
+    public String replyMessage(Principal principal,
+                               Model model,
+                               @PathVariable("thread_id") long thread_id,
+                               @ModelAttribute Message message) {
+        Thread currentThread = threadRepo.findOne(thread_id);
+        User currentUser = userRepo.findByUsername(principal.getName());
+        message.setThread(currentThread);
+        message.setDate(new Date());
+        message.setSender(currentUser);
+        User one = currentThread.getGuest();
+        User two = currentThread.getHost();
+        if (currentUser == one) {
+            message.setReceiver(two);
+            message.setRecipient(two.getUsername());
+        } else {
+            message.setReceiver(one);
+            message.setRecipient(one.getUsername());
+        }
+        message.setAuthorUsername(currentUser.getUsername());
+
+        messageRepo.save(message);
+        List<Message> currentMessages = currentThread.getMessages();
+        model.addAttribute("thread", currentThread);
+        model.addAttribute("messages", currentMessages);
+        model.addAttribute("message", new Message());
+
+
+        return "messages/messageThreadDetails";
+
+
     }
 }

@@ -18,6 +18,14 @@ public class Thread {
     @Column(name="guest_name")
     private String guestName;
 
+    @ManyToOne
+    @JoinColumn(name="host_id")
+    private User host;
+
+    @ManyToOne
+    @JoinColumn(name="guest_id")
+    private User guest;
+
 
     @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
     private List<Message> messages;
@@ -52,5 +60,21 @@ public class Thread {
 
     public void setGuestName(String guestName) {
         this.guestName = guestName;
+    }
+
+    public User getHost() {
+        return host;
+    }
+
+    public void setHost(User host) {
+        this.host = host;
+    }
+
+    public User getGuest() {
+        return guest;
+    }
+
+    public void setGuest(User guest) {
+        this.guest = guest;
     }
 }

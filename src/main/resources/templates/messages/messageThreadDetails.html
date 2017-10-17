@@ -11,6 +11,11 @@
     <div th:text="${message.authorUsername}"></div>
 </div>
 
+<form th:action="@{'/replyMessage/' + ${thread.id}}" method="post" th:object="${message}">
+    <textarea type="text" th:field="*{note}"></textarea>
+    <input type="submit" value="Add Message" />
+</form>
+
 <span th:replace="fragments/template :: js"></span>
 </body>
 </html>
