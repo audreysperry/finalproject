@@ -91,6 +91,19 @@ public class SearchController {
 
     }
 
+    @RequestMapping(value="/shelterStateResults", method = RequestMethod.GET)
+    public String filterShelterOptionsByState(Model model,
+                                              Principal principal,
+                                              @RequestParam("state") String state,
+                                              @RequestParam("shelterType") String shelterType) {
+        List<HostLocation> hostLocations = locationRepo.findAllByTypeAndState(shelterType, state);
+
+        model.addAttribute("type", shelterType);
+        model.addAttribute("locations", hostLocations);
+
+        return "searches/shelterOptions";
+    }
+
     @RequestMapping(value="/animalSearch", method = RequestMethod.GET)
     public String animalSearchPage() {
         return "/searches/animalSearch";
@@ -111,9 +124,10 @@ public class SearchController {
                                 @RequestParam("animalType") String animalType) {
         System.out.println(state);
         List<Space> spaces = spaceRepo.findAllByAnimalTypeAndHostLocation_State(animalType, state);
-        System.out.println("these are spaces: " + spaces);
         model.addAttribute("spaces", spaces);
         model.addAttribute("animalType", animalType);
         return "/searches/spaceOptions";
     }
+
+
 }

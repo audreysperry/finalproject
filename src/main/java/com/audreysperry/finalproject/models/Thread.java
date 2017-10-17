@@ -5,6 +5,8 @@ import javax.persistence.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import com.audreysperry.finalproject.models.User;
+
 
 @Entity
 @Table(name="threads")
@@ -84,13 +86,9 @@ public class Thread {
         List<Message> allMessages = getMessages();
         for (Message message : allMessages
                 ) {
-            System.out.println(message.getReceiver().getUsername());
-            System.out.println(user);
             if (message.isMessageRead() == false && user.getUsername().equals(message.getReceiver().getUsername())) {
                 unreadMessages.add(message);
             }
-            System.out.println(unreadMessages);
-            System.out.println(unreadMessages.size());
         }
         return unreadMessages.size();
     }
