@@ -6,15 +6,11 @@
 </head>
 <body>
 <div th:replace="fragments/template :: nav"></div>
-
-<h1>HI</h1>
-<div th:each="thread : ${threads}">
-    <a th:href="@{'/thread/' + ${thread.id}}">
-    <h1>View Message Between you and</h1>
-
-    <h1 th:text="${thread.hostName}"></h1>
-        </a>
+<div th:each="message : ${messages}">
+    <div th:text="${message.note}"></div>
+    <div th:text="${message.authorUsername}"></div>
 </div>
+
 <span th:replace="fragments/template :: js"></span>
 </body>
 </html>

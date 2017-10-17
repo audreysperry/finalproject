@@ -329,15 +329,29 @@ public class AppController {
         Role role = user.getRole();
         String roleName = role.getName();
         System.out.println(roleName);
+        Boolean host = false;
 
         if (role.getName() == "ROLE_GENERAL") {
             model.addAttribute("threads", threadRepo.findAllByGuestName(principal.getName()));
         } else {
             model.addAttribute("threads", threadRepo.findAllByHostName(principal.getName()));
+            host = true;
         }
         System.out.println(principal.getName());
-        System.out.println(threadRepo.findAllByGuestName(principal.getName()));
-        model.addAttribute("threads", threadRepo.findAllByGuestName(principal.getName()));
+        System.out.println(threadRepo.findAllByHostName(principal.getName()));
+        model.addAttribute("host", host);
         return "messages/messageBoard";
+    }
+
+    @RequestMapping(value="thread/{thread_id}", method = RequestMethod.GET)
+    public String displayMessages(Principal principal,
+                                  Model model,
+                                  @PathVariable("thread_id") long thread_id) {
+        Thread currentThread = threadRepo.findOne(thread_id);
+        List<Message> currentMessages = currentThread.getMessages();
+
+
+        model.addAttribute("messages", currentMessages);
+        return "messages/messageThreadDetails";
     }
 }
