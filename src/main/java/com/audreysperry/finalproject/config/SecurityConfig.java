@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/host").authenticated()
                 .antMatchers("/addLocation").authenticated()
                 .antMatchers("/").permitAll()
+                .antMatchers("/messageHost/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
