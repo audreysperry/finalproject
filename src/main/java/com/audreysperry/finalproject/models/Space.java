@@ -1,6 +1,5 @@
 package com.audreysperry.finalproject.models;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +17,10 @@ public class Space {
     private int animalNumber;
 
     private String notes;
+
+    @Column(name="image_path")
+    private String imagePath;
+
 
     @ManyToOne
     @JoinColumn(name="location_id")
@@ -61,5 +64,13 @@ public class Space {
 
     public void setHostLocation(HostLocation hostLocation) {
         this.hostLocation = hostLocation;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

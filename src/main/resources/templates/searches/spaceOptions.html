@@ -71,6 +71,7 @@
         <span th:text="${space.hostLocation.type}"></span>
         <div class="card-subtitle mb-2 text-muted"><span th:text="${space.hostLocation.city}"></span><span>, </span><span th:text="${space.hostLocation.state}"></span></div>
         <p class="card-text" th:text="${space.notes}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <img th:src="@{'/files/' + ${space.imagePath}}" class="space-img" alt="" />
         <a th:href="@{'/messageHost/' + ${space.hostLocation.user.id}}" class="card-link">Send host a Message</a>
     </div>
 </div>

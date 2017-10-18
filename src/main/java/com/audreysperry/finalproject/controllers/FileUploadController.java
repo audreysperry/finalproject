@@ -3,6 +3,8 @@ package com.audreysperry.finalproject.controllers;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import com.audreysperry.finalproject.models.Space;
+import com.audreysperry.finalproject.repositories.SpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -27,21 +29,25 @@ public class FileUploadController {
 
     private final StorageService storageService;
 
+
+    @Autowired
+    private SpaceRepository spaceRepo;
+
     @Autowired
     public FileUploadController(StorageService storageService) {
         this.storageService = storageService;
     }
 
-    @GetMapping("/fileUpload")
-    public String listUploadedFiles(Model model) throws IOException {
-
-        model.addAttribute("files", storageService.loadAll().map(
-                path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-                        "serveFile", path.getFileName().toString()).build().toString())
-                .collect(Collectors.toList()));
-
-        return "uploadForm";
-    }
+//    @GetMapping("/fileUpload")
+//    public String listUploadedFiles(Model model) throws IOException {
+//
+//        model.addAttribute("files", storageService.loadAll().map(
+//                path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
+//                        "serveFile", path.getFileName().toString()).build().toString())
+//                .collect(Collectors.toList()));
+//
+//        return "uploadForm";
+//    }
 
 
     @GetMapping("/files/{filename:.+}")
@@ -55,9 +61,16 @@ public class FileUploadController {
 
     @PostMapping("/fileUpload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
+                                   @RequestParam("spaceid") long spaceid,
                                    RedirectAttributes redirectAttributes) {
-
+        System.out.println(file.getOriginalFilename());
+        Space space = spaceRepo.findOne(spaceid);
+        String fileName = file.getOriginalFilename();
+        space.setImagePath(fileName);
+        spaceRepo.save(space);
         storageService.store(file);
+
+
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 

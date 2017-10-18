@@ -19,12 +19,7 @@
     </form>
 </div>
 <h1>Add an image of your space</h1>
-<form method="POST" enctype="multipart/form-data" th:action="@{'/addLocationImg/' + ${location.id}}">
-    <table>
-        <tr><td>File to upload:</td><td><input type="file" name="locationImage" /></td></tr>
-        <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-    </table>
-</form>
+
 <div class="container">
     <h1>SPACES</h1>
     <div th:each="space : ${location.spaces}">
@@ -35,6 +30,14 @@
         <span th:text="${space.notes}"></span>
         <form th:action="@{'/space/' + ${space.id} + '/edit'}" method="get">
             <input type="submit" value="Edit" />
+        </form>
+        <form method="POST" enctype="multipart/form-data" action="/fileUpload/">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" th:value="${space.id}" name="spaceid" />
+            <table>
+                <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+                <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+            </table>
         </form>
     </div>
 </div>
