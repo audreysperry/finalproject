@@ -84,7 +84,6 @@ public class HostController {
 
         model.addAttribute("location_id", hostLocation.getId());
         model.addAttribute("space", new Space());
-
         return "addSpace";
     }
 

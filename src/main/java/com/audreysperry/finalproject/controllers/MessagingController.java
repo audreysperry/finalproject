@@ -26,7 +26,9 @@ public class MessagingController {
     private ThreadRepository threadRepo;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
-    public String homePage() {
+    public String homePage(Model model) {
+
+        model.addAttribute("user", new User());
 
         return "home";
     }
@@ -85,7 +87,7 @@ public class MessagingController {
             model.addAttribute("threads", threadRepo.findAllByHost(user));
 
         }
-
+        model.addAttribute("user", new User());
         return "messages/messageBoard";
     }
 

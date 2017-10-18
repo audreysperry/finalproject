@@ -35,39 +35,83 @@
                 <li role="presentation"><a href="/host">Become an Animal Host</a></li>
 
             </ul>
-            <p class="navbar-text navbar-right"><a class="navbar-link login" data-toggle="modal" href="#" data-target="#login">Log In</a> <a class="btn btn-default action-button" role="button" href="/signup">Sign Up</a></p>
-            <button type="button" class="btn btn-primary"></button>
+            <p class="navbar-text navbar-right"><a class="navbar-link login" data-toggle="modal" href="#" data-target="#login">Log In</a> <a class="btn btn-default action-button" role="button" data-toggle="modal" href="#" data-target="#signup">Sign Up</a></p>
         </div>
-    </div>
-    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-                    <div style="color:red;" th:text="${errors}"></div>
-                    <form action="/login" method="post" th:object="${user}">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <label th:for="*{username}" >Username</label>
-                        <input type="text" th:field="*{username}" />
-                        <br/>
-                        <label th:for="*{password}">Password</label>
-                        <input type="password" th:field="*{password}" />
-                        <input type="submit" value="Login" />
-                    </form>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+
+        <!--Login modal-->
+        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                        <div style="color:red;" th:text="${errors}"></div>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/login" method="post" th:object="${user}">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <label th:for="*{username}" >Username</label>
+                            <input type="text" th:field="*{username}" />
+                            <br/>
+                            <label th:for="*{password}">Password</label>
+                            <input type="password" th:field="*{password}" />
+                            <input type="submit" value="Login" />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!--Signup Modal -->
+        <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Signup</h5>
+                        <div style="color:red;" th:text="${errors}"></div>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-format" action="/signup" method="post" th:object="${user}">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input class="form-control" type="text" th:field="*{firstName}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input class="form-control" type="text" th:field="*{lastName}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input class="form-control" type="text" th:field="*{email}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="username">User Name</label>
+                                <input class="form-control" type="text" th:field="*{username}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input class="form-control" type="password" th:field="*{password}" />
+                            </div>
+                            <button type="submit" class="btn btn-secondary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
+
+
+
 </nav>
 <span th:fragment="js">
     <script type="application/javascript"
