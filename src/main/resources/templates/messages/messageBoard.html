@@ -5,18 +5,21 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/template :: nav"></div>
+<div class="wrapper">
+    <div th:replace="fragments/template :: nav"></div>
 
-<h1>HI</h1>
-<div th:each="thread : ${threads}">
-    <a th:href="@{'/thread/' + ${thread.id}}">
-    <span>View messages between you and</span>
-    <span sec:authorize="hasRole('ROLE_HOST')" th:text="${thread.guest.firstName}"></span>
-        <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
-    </a>
-    <span>Unread messages: </span>
-    <span th:text="${thread.getUnreadMessages(#authentication.getPrincipal())}"></span>
+    <h1>HI</h1>
+    <div th:each="thread : ${threads}">
+        <a th:href="@{'/thread/' + ${thread.id}}">
+            <span>View messages between you and</span>
+            <span sec:authorize="hasRole('ROLE_HOST')" th:text="${thread.guest.firstName}"></span>
+            <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
+        </a>
+        <span>Unread messages: </span>
+        <span th:text="${thread.getUnreadMessages(#authentication.getPrincipal())}"></span>
+    </div>
 </div>
+
 <span th:replace="fragments/template :: js"></span>
 </body>
 </html>

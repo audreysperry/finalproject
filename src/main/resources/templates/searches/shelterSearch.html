@@ -5,31 +5,35 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/template :: nav"></div>
+<div class="wrapper">
+    <div th:replace="fragments/template :: nav"></div>
 
-<section id="section1" class="padding-bottom-0">
-    <div class="container">
-        <h1 class="text-center v-center">Search</h1>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-2 text-center"><a href="/search/Home"><h3>Homes</h3></a><p>There is other content and snippets of details or features that can be placed here..</p><i class="fa fa-cog fa-5x"></i></div>
+    <section id="section1" class="padding-bottom-0">
+        <div class="container">
+            <h1 class="text-center v-center">Search</h1>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-2 text-center"><a href="/search/Home"><h3>Homes</h3></a><p>There is other content and snippets of details or features that can be placed here..</p><i class="fa fa-cog fa-5x"></i></div>
+                    </div>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1 text-center"><a href="/search/Farm"><h3>Farms</h3></a><p>You may also want to create content that compells users to scroll down more..</p><i class="fa fa-cog fa-5x"></i></div>
+                    </div>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <div class="row">
+                        <div class="col-sm-10 text-center"><a href="/search/Shelter"><h3>Animal Shelters</h3></a><p>In the first 30 seconds of a user's visit to your site they decide if they're going to stay..</p><i class="fa fa-cog fa-5x"></i></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4 text-center">
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1 text-center"><a href="/search/Farm"><h3>Farms</h3></a><p>You may also want to create content that compells users to scroll down more..</p><i class="fa fa-cog fa-5x"></i></div>
-                </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <div class="row">
-                    <div class="col-sm-10 text-center"><a href="/search/Shelter"><h3>Animal Shelters</h3></a><p>In the first 30 seconds of a user's visit to your site they decide if they're going to stay..</p><i class="fa fa-cog fa-5x"></i></div>
-                </div>
-            </div>
-        </div>
-    </div><!--/container-->
+        </div><!--/container-->
 
-</section>
+    </section>
+
+
+</div>
 
 <span th:replace="fragments/template :: js"></span>
 </body>

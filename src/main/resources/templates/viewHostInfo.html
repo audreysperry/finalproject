@@ -5,47 +5,51 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/template :: nav"></div>
-
-<div class="container">
-    <h1>LOCATION</h1>
-    <span th:text="${location.streetAddress}"></span>
-    <br/>
-    <span th:text="${location.city}"></span>
-    <span>, </span>
-    <span th:text="${location.state}"></span>
-    <form th:action="@{'/location/' + ${location.id} + '/edit'}" method="get">
-        <input type="submit" value="Edit" />
-    </form>
-</div>
-<h1>Add an image of your space</h1>
-
-<div class="container">
-    <h1>SPACES</h1>
-    <div th:each="space : ${location.spaces}">
-        <span th:text="${space.animalNumber}"></span>
-        <span> </span>
-        <span th:text="${space.animalType}"></span>
+<div class="wrapper">
+    <div th:replace="fragments/template :: nav"></div>
+    <div>Edit or Deactive Your Host Information</div>
+    <div class="container">
+        <h1>Your Location</h1>
+        <span th:text="${location.streetAddress}"></span>
         <br/>
-        <span th:text="${space.notes}"></span>
-        <form th:action="@{'/space/' + ${space.id} + '/edit'}" method="get">
-            <input type="submit" value="Edit" />
-        </form>
-        <form method="POST" enctype="multipart/form-data" action="/fileUpload/">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <input type="hidden" th:value="${space.id}" name="spaceid" />
-            <table>
-                <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-                <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-            </table>
+        <span th:text="${location.city}"></span>
+        <span>, </span>
+        <span th:text="${location.state}"></span>
+        <br/>
+        <span th:text="${location.zipCode}"></span>
+        <form th:action="@{'/location/' + ${location.id} + '/edit'}" method="get">
+            <input type="submit" class="btn btn-secondary" value="Edit" />
         </form>
     </div>
+
+    <div class="container">
+        <h1>Your Available Space</h1>
+        <div th:each="space : ${location.spaces}">
+            <span th:text="${space.animalNumber}"></span>
+            <span> </span>
+            <span th:text="${space.animalType}"></span>
+            <br/>
+            <span th:text="${space.notes}"></span>
+            <form th:action="@{'/space/' + ${space.id} + '/edit'}" method="get">
+                <input type="submit" class="btn btn-secondary" value="Edit" />
+            </form>
+            <form method="POST" enctype="multipart/form-data" action="/fileUpload/">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <input type="hidden" th:value="${space.id}" name="spaceid" />
+                <table>
+                    <tr><td>Add a picture of your space. Must be JPEG or PNG.</td>
+                        <br/>
+                        <td><input type="file" name="file" /></td></tr>
+                    <tr><td></td><td><input type="submit" class="btn btn-secondary" value="Upload" /></td></tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <form action="/addSpace">
+        <input type="submit" class="btn btn-outline-secondary" value="Add Another Space" />
+    </form>
 </div>
-
-<form action="/addSpace">
-    <input type="submit" class="btn" value="Add Additional Space" />
-</form>
-
 
 <span th:replace="fragments/template :: js"></span>
 </body>

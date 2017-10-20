@@ -258,7 +258,7 @@
   border:1px solid #444;
   background-color:#aaa;
   overflow:hidden;
-  background:url(../../assets/img/skyscraper.jpg);
+  background:url(../../assets/img/dog.png);
   background-size:cover;
   background-position:center;
 }
@@ -294,3 +294,88 @@
   max-height: 100px;
 }
 
+.searchImg {
+  width: 150px;
+}
+
+.search {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.search-heading {
+  margin-bottom: 30px;
+  font-size: 20px;
+
+}
+
+.navbar {
+  background:#21a9af;
+  padding-top:12px;
+  padding-bottom:10px;
+  color:#fff;
+  border-radius:0;
+  box-shadow:none;
+  border:none;
+}
+
+.navbar .navbar-collapse p .login{
+  color:#d9d9d9;
+  margin-right:10px;
+  text-decoration:none;
+}
+
+.navbar.navbar .navbar-nav > li > a{
+  padding-left:18px;
+  padding-right:18px;
+}
+
+.navbar.navbar-default .navbar-nav > li > a{
+  color:#d9d9d9;
+}
+
+.action-button:hover{
+  color:#fff;
+}
+
+.action-button.btn-lg{
+  padding:7px 18px;
+}
+
+.action-button, .header-blue .action-button:active{
+  border:1px solid rgba(255,255,255,0.7);
+  border-radius:20px;
+  color:#ebeff1;
+  box-shadow:none;
+  text-shadow:none;
+  padding:6px 15px;
+  background:transparent;
+  transition:background-color 0.25s;
+  outline:none;
+}
+
+.form-design {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.navbar .modal-design {
+  color: black;
+}
+
+.modal-header .modal-title {
+  color: black;
+  font-size: 20px;
+  text-align: center;
+}
+
+.location-heading {
+  margin-bottom: 40px;
+}
+
+.space-note {
+  margin-top: 10px;
+  font-style: italic;
+}

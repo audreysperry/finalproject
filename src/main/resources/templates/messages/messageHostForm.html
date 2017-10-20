@@ -5,12 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/template :: nav"></div>
+<div class="wrapper">
+    <div th:replace="fragments/template :: nav"></div>
 
-<form th:action="@{'/addMessage/' + ${host.id}}" method="post" th:object="${message}">
-    <textarea type="text" th:field="*{note}" placeholder="Enter message for host"></textarea>
-    <input type="submit" value="Send Message"/>
-</form>
+    <form class="form-format container form-design col-lg-6" th:action="@{'/addMessage/' + ${host.id}}" method="post" th:object="${message}">
+        <textarea type="text" th:field="*{note}" placeholder="Enter message for host"></textarea>
+        <input type="submit" value="Send Message"/>
+    </form>
+
+</div>
 
 
 <span th:replace="fragments/template :: js"></span>

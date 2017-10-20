@@ -5,123 +5,46 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/template :: nav"></div>
-<div th:replace="fragments/template :: navHost"></div>
-<div class="wrap">
-    <form action="/addSpace" method="post" th:object="${space}" class="form-horizontal">
-        <fieldset>
-            <legend>What kind of place do you have for animals?</legend>
+<div class="wrapper">
+    <div th:replace="fragments/template :: nav"></div>
+    <div>
+        <form action="/addSpace" method="post" th:object="${space}" class="form-format container form-design col-lg-6">
+            <h3 class="location-heading">Add information about number and type of animal</h3>
+
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <div class="form-group">
-                <input name="location_id" type="hidden" th:value="${location_id}" />
-                <label for="animalType" class="col-lg-6 control-label">What type of animal do you have space for?</label>
-                <div class="col-lg-10">
-                    <select class="form-control" type="text" th:field="*{animalType}">
-                        <option value="Chickens">Chickens</option>
-                        <option value="Cows">Cows</option>
-                        <option value="Horses">Horses</option>
-                        <option value="Other Farm Animals">Other Farm Animals</option>
-                        <option value="Birds">Birds</option>
-                        <option value="Cats">Cats</option>
-                        <option value="Dogs">Dogs</option>
-                        <option value="otherDomestic">Other Domestic Animals</option>
-                    </select>
+                <div class="form-group">
+                    <input name="location_id" type="hidden" th:value="${location_id}" />
+                    <div class="form-group">
+                        <label for="animalType">What type of animal do you have space for?</label>
+                        <select class="form-control" type="text" th:field="*{animalType}">
+                            <option value="Chickens">Chickens</option>
+                            <option value="Cows">Cows</option>
+                            <option value="Horses">Horses</option>
+                            <option value="Other Farm Animals">Other Farm Animals</option>
+                            <option value="Birds">Birds</option>
+                            <option value="Cats">Cats</option>
+                            <option value="Dogs">Dogs</option>
+                            <option value="otherDomestic">Other Domestic Animals</option>
+                        </select>
+                    </div>
                 </div>
-                <br/>
-            </div>
-            <div class="form-group">
-                <label for="animalNumber" class="col-lg-6 control-label">How many can you take? </label>
-                <div class="col-lg-10">
+                <div class="form-group">
+                    <label for="animalNumber">How many can you take?</label>
                     <input class="form-control" type="number" th:field="*{animalNumber}" />
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="notes" class="col-lg-6 control-label">Anything else you'd like to add about your space? Do you have kids? What type of space will the animals be kept? Do you have a limit on the amount of time you can keep them?</label>
-                <div class="col-lg-10">
+                <div class="form-group">
+                    <label for="notes">Anything else you'd like to add about your space? Do you have kids? What type of space will the animals be kept? Do you have a limit on the amount of time you can keep them?</label>
                     <textarea class="form-control" type="text" th:field="*{notes}"></textarea>
                 </div>
-            </div>
-            <div class="col-lg-10 col-lg-offset-2">
-                <button type="submit">Add my Space</button>
-            </div>
-        </fieldset>
-    </form>
 
+                    <button type="submit" class="btn btn-secondary">Post My Space</button>
+            <p class="space-note">You can add space for other types of animals by editing your hosting info. You can also upload photos of your space.</p>
+
+        </form>
+
+    </div>
 </div>
 
-
-<!--<form class="form-horizontal">-->
-    <!--<fieldset>-->
-        <!--<legend>Legend</legend>-->
-        <!--<div class="form-group">-->
-            <!--<label for="inputEmail" class="col-lg-2 control-label">Email</label>-->
-            <!--<div class="col-lg-10">-->
-                <!--<input type="text" class="form-control" id="inputEmail" placeholder="Email">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="inputPassword" class="col-lg-2 control-label">Password</label>-->
-            <!--<div class="col-lg-10">-->
-                <!--<input type="password" class="form-control" id="inputPassword" placeholder="Password">-->
-                <!--<div class="checkbox">-->
-                    <!--<label>-->
-                        <!--<input type="checkbox"> Checkbox-->
-                    <!--</label>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="textArea" class="col-lg-2 control-label">Textarea</label>-->
-            <!--<div class="col-lg-10">-->
-                <!--<textarea class="form-control" rows="3" id="textArea"></textarea>-->
-                <!--<span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label class="col-lg-2 control-label">Radios</label>-->
-            <!--<div class="col-lg-10">-->
-                <!--<div class="radio">-->
-                    <!--<label>-->
-                        <!--<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">-->
-                        <!--Option one is this-->
-                    <!--</label>-->
-                <!--</div>-->
-                <!--<div class="radio">-->
-                    <!--<label>-->
-                        <!--<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">-->
-                        <!--Option two can be something else-->
-                    <!--</label>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="select" class="col-lg-2 control-label">Selects</label>-->
-            <!--<div class="col-lg-10">-->
-                <!--<select class="form-control" id="select">-->
-                    <!--<option>1</option>-->
-                    <!--<option>2</option>-->
-                    <!--<option>3</option>-->
-                    <!--<option>4</option>-->
-                    <!--<option>5</option>-->
-                <!--</select>-->
-                <!--<br>-->
-                <!--<select multiple="" class="form-control">-->
-                    <!--<option>1</option>-->
-                    <!--<option>2</option>-->
-                    <!--<option>3</option>-->
-                    <!--<option>4</option>-->
-                    <!--<option>5</option>-->
-                <!--</select>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<div class="col-lg-10 col-lg-offset-2">-->
-                <!--<button type="reset" class="btn btn-default">Cancel</button>-->
-                <!--<button type="submit" class="btn btn-primary">Submit</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</fieldset>-->
-<!--</form>-->
 <span th:replace="fragments/template :: js"></span>
 </body>
 </html>

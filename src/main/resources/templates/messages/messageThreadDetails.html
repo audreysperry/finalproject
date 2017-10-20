@@ -5,16 +5,19 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/template :: nav"></div>
-<div th:each="message : ${messages}">
-    <div th:text="${message.note}"></div>
-    <div th:text="${message.authorUsername}"></div>
+<div class="wrapper">
+    <div th:replace="fragments/template :: nav"></div>
+    <div th:each="message : ${messages}">
+        <div th:text="${message.note}"></div>
+        <div th:text="${message.authorUsername}"></div>
+    </div>
+
+    <form th:action="@{'/replyMessage/' + ${thread.id}}" method="post" th:object="${message}">
+        <textarea type="text" th:field="*{note}"></textarea>
+        <input type="submit" value="Add Message" />
+    </form>
 </div>
 
-<form th:action="@{'/replyMessage/' + ${thread.id}}" method="post" th:object="${message}">
-    <textarea type="text" th:field="*{note}"></textarea>
-    <input type="submit" value="Add Message" />
-</form>
 
 <span th:replace="fragments/template :: js"></span>
 </body>

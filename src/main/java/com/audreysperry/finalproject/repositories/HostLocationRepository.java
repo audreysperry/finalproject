@@ -17,4 +17,6 @@ public interface HostLocationRepository extends CrudRepository<HostLocation, Lon
     List<HostLocation> findAllByTypeAndState(String type, String state);
 
     List<HostLocation> findAll();
+
+    HostLocation findById(long id);
 }

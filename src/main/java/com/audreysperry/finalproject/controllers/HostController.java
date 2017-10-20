@@ -90,7 +90,7 @@ public class HostController {
     @RequestMapping(value="/addSpace", method = RequestMethod.POST)
     public String addSpace(@ModelAttribute Space space,
                            @RequestParam("location_id") long location_id) {
-        HostLocation currentHostLocation = locationRepo.findOne(location_id);
+        HostLocation currentHostLocation = locationRepo.findById(location_id);
         space.setHostLocation(currentHostLocation);
         spaceRepo.save(space);
         return "redirect:/editHost";

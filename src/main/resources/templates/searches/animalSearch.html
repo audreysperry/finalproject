@@ -5,73 +5,77 @@
     <title>Title</title>
 </head>
 <body>
-<div  th:replace="fragments/template :: nav"></div>
+<div class="wrapper">
+    <div  th:replace="fragments/template :: nav"></div>
 
-<!--<div>-->
+    <!--<div>-->
     <!--<form action="/animalResults">-->
-        <!--<input type="text" name="search" />-->
-        <!--<input type="submit" value="Filter by State">-->
+    <!--<input type="text" name="search" />-->
+    <!--<input type="submit" value="Filter by State">-->
     <!--</form>-->
-<!--</div>-->
-<!--<div class="row">-->
+    <!--</div>-->
+    <!--<div class="row">-->
     <!--<div class="col-sm-4" th:each="space: ${space}">-->
-        <!--<div class="card">-->
-            <!--<div class="card-block">-->
-                <!--<h4 class="card-title" th:text="${space.animalType}"></h4>-->
-                <!--<p class="card-text" th:text="${space.notes}"></p>-->
-                <!--<span class="card-text" th:text="${space.hostLocation.city}"></span>-->
-                <!--<span class="card-text">, </span>-->
-                <!--<span class="card-text" th:text="${space.hostLocation.state}"></span>-->
-                <!--<br/>-->
-                <!--<a th:href="@{'/spaceListing/' + ${space.id}}" class="btn btn-primary">View listings</a>-->
-            <!--</div>-->
-        <!--</div>-->
+    <!--<div class="card">-->
+    <!--<div class="card-block">-->
+    <!--<h4 class="card-title" th:text="${space.animalType}"></h4>-->
+    <!--<p class="card-text" th:text="${space.notes}"></p>-->
+    <!--<span class="card-text" th:text="${space.hostLocation.city}"></span>-->
+    <!--<span class="card-text">, </span>-->
+    <!--<span class="card-text" th:text="${space.hostLocation.state}"></span>-->
+    <!--<br/>-->
+    <!--<a th:href="@{'/spaceListing/' + ${space.id}}" class="btn btn-primary">View listings</a>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
 
-<!--</div>-->
+    <!--</div>-->
 
-<div class="row">
-    <a href="location/Dogs">
-        <div class="col-sm-3 animalItem">
-            <div>Dogs</div>
-        </div>
-    </a>
-    <a href="location/Cats">
-        <div class="col-sm-3 animalItem">
-            <div>Cats</div>
-        </div>
-    </a>
-    <a href="location/Birds">
-        <div class="col-sm-3 animalItem">
-            <div>Birds</div>
-        </div>
-    </a>
-    <a href="location/Other Domestic Animals">
-        <div class="col-sm-3 animalItem">
-            <div>Other Domestic Animals</div>
-        </div>
-    </a>
-    <a href="location/Chickens">
-        <div class="col-sm-3 animalItem">
-            <div>Chickens</div>
-        </div>
-    </a>
-    <a href="location/Horses">
-        <div class="col-sm-3 animalItem">
-            <div>Horses</div>
-        </div>
-    </a>
-    <a href="location/Cows">
-        <div class="col-sm-3 animalItem">
-            <div>Cows</div>
-        </div>
-    </a>
-    <a href="location/Other Farm Animals">
-        <div class="col-sm-3 animalItem">
-            <div>Other Farm Animals</div>
-        </div>
-    </a>
+    <div class="row">
+        <a href="location/Dogs">
+            <div class="col-sm-3 animalItem">
+                <div>Dogs</div>
+            </div>
+        </a>
+        <a href="location/Cats">
+            <div class="col-sm-3 animalItem">
+                <div>Cats</div>
+            </div>
+        </a>
+        <a href="location/Birds">
+            <div class="col-sm-3 animalItem">
+                <div>Birds</div>
+            </div>
+        </a>
+        <a href="location/Other Domestic Animals">
+            <div class="col-sm-3 animalItem">
+                <div>Other Domestic Animals</div>
+            </div>
+        </a>
+        <a href="location/Chickens">
+            <div class="col-sm-3 animalItem">
+                <div>Chickens</div>
+            </div>
+        </a>
+        <a href="location/Horses">
+            <div class="col-sm-3 animalItem">
+                <div>Horses</div>
+            </div>
+        </a>
+        <a href="location/Cows">
+            <div class="col-sm-3 animalItem">
+                <div>Cows</div>
+            </div>
+        </a>
+        <a href="location/Other Farm Animals">
+            <div class="col-sm-3 animalItem">
+                <div>Other Farm Animals</div>
+            </div>
+        </a>
+    </div>
+    <span th:replace="fragments/template :: js"></span>
+
 </div>
-<span th:replace="fragments/template :: js"></span>
+
 </body>
 </html>
