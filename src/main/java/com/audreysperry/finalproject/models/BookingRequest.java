@@ -2,6 +2,7 @@ package com.audreysperry.finalproject.models;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="booking_requests")
@@ -22,8 +23,12 @@ public class BookingRequest {
     @JoinColumn(name="space_id")
     private Space space;
 
+    @ManyToOne
+    @JoinColumn(name="host_id")
+    private User host;
+
     @Column(name="host_response")
-    private boolean hostResponse;
+    private Boolean hostResponse;
 
     private String notes;
 
@@ -59,11 +64,11 @@ public class BookingRequest {
         this.space = space;
     }
 
-    public boolean isHostResponse() {
+    public Boolean isHostResponse() {
         return hostResponse;
     }
 
-    public void setHostResponse(boolean hostResponse) {
+    public void setHostResponse(Boolean hostResponse) {
         this.hostResponse = hostResponse;
     }
 
@@ -74,4 +79,13 @@ public class BookingRequest {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    public User getHost() {
+        return host;
+    }
+
+    public void setHost(User host) {
+        this.host = host;
+    }
+
 }

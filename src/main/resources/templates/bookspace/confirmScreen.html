@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:www.thymeleaf.org">
+<head th:replace="fragments/template :: head">
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="fragments/template :: nav"></div>
+
+    <div class="container">
+        <h3>Your request has been sent. Please keep an eye on your messages for a response from the Host.</h3>
+        <a class="btn btn-secondary" href="/locationSearch">Browse more options</a>
+
+    </div>
+</div>
+<div th:replace="fragments/template :: js"></div>
+
+</body>
+</html>

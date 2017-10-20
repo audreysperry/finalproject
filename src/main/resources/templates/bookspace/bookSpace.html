@@ -7,7 +7,7 @@
 <body>
 <div class="wrapper">
    <div th:replace="fragments/template :: nav"></div>
-    <div clsas="container">
+    <div class="container">
         <span>Host: </span>
         <span th:text="${space.hostLocation.user.firstName}"></span>
         <br/>
@@ -24,7 +24,7 @@
 
     </div>
 
-    <form action="/requestSpace" class="form-format container form-design col-lg-6" method="post" th:object="${booking}">
+    <form th:action="@{'/requestSpace/' + ${space.id}}" class="form-format container form-design col-lg-6" method="post" th:object="${booking}">
         <h3>Make a request for you animals to stay.</h3>
         <h5>The host will approve or deny your request.</h5>
         <div class="form-group">
@@ -38,5 +38,6 @@
         <input type="submit" class="btn btn-secondary" value="Request to Stay"/>
     </form>
 </div>
+<span th:replace="fragments/template :: js"></span>
 </body>
 </html>
