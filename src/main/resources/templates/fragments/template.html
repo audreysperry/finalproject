@@ -18,10 +18,6 @@
             <ul class="nav navbar-nav">
                 <li sec:authorize="hasRole('ROLE_HOST')" role="presentation"><a href="/editHost">Edit Hosting Information</a></li>
                 <li sec:authorize="hasRole('ROLE_GENERAL')" role="presentation"><a href="/host">Become an Animal Host</a></li>
-
-
-
-
             </ul>
             <p class="navbar-text navbar-right"><span><a class="navbar-link login" href="/messages">Messages</a></span> <a class="btn btn-default action-button" role="button" href="/logout">Logout</a></p>
         </div>

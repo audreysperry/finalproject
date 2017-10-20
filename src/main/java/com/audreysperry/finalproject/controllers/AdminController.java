@@ -34,6 +34,8 @@ public class AdminController {
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String loginForm(Model model,
                             HttpServletRequest request) {
+        String referrer = request.getHeader("Referer");
+        request.getSession().setAttribute("url_prior_login", referrer);
 
         model.addAttribute("user", new User());
         Object message = request.getSession().getAttribute("error");

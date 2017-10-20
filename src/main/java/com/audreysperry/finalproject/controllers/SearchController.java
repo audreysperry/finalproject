@@ -5,6 +5,7 @@ import com.audreysperry.finalproject.googleApi.GeoCodingResponse;
 import com.audreysperry.finalproject.models.ApiKey;
 import com.audreysperry.finalproject.models.HostLocation;
 import com.audreysperry.finalproject.models.Space;
+import com.audreysperry.finalproject.models.User;
 import com.audreysperry.finalproject.repositories.*;
 import feign.Feign;
 import feign.gson.GsonDecoder;
@@ -32,7 +33,8 @@ public class SearchController {
 
 
     @RequestMapping(value="/locationSearch", method = RequestMethod.GET)
-    public String locationSearchPage() {
+    public String locationSearchPage(Model model) {
+        model.addAttribute("user", new User());
         return "/searches/locationSearch";
     }
 
@@ -71,11 +73,13 @@ public class SearchController {
             }
         }
         model.addAttribute("locations", hostLocations);
+        model.addAttribute("user", new User());
         return "/searches/locationSearch";
     }
 
     @RequestMapping(value="/shelterSearch", method = RequestMethod.GET)
-    public String shelterSearchPage() {
+    public String shelterSearchPage(Model model) {
+        model.addAttribute("user", new User());
         return "/searches/shelterSearch";
     }
 
@@ -86,7 +90,7 @@ public class SearchController {
         List<HostLocation> hostLocations = locationRepo.findAllByType(shelterType);
         model.addAttribute("type", shelterType);
         model.addAttribute("locations", hostLocations);
-
+        model.addAttribute("user", new User());
         return "searches/shelterOptions";
 
     }
@@ -100,12 +104,13 @@ public class SearchController {
 
         model.addAttribute("type", shelterType);
         model.addAttribute("locations", hostLocations);
-
+        model.addAttribute("user", new User());
         return "searches/shelterOptions";
     }
 
     @RequestMapping(value="/animalSearch", method = RequestMethod.GET)
-    public String animalSearchPage() {
+    public String animalSearchPage(Model model) {
+        model.addAttribute("user", new User());
         return "/searches/animalSearch";
     }
 
@@ -115,6 +120,7 @@ public class SearchController {
             Model model) {
         model.addAttribute("spaces", spaceRepo.findAllByAnimalType(animalType));
         model.addAttribute("animalType", animalType);
+        model.addAttribute("user", new User());
         return "/searches/spaceOptions";
     }
 
@@ -126,6 +132,7 @@ public class SearchController {
         List<Space> spaces = spaceRepo.findAllByAnimalTypeAndHostLocation_State(animalType, state);
         model.addAttribute("spaces", spaces);
         model.addAttribute("animalType", animalType);
+        model.addAttribute("user", new User());
         return "/searches/spaceOptions";
     }
 

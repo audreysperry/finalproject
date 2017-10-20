@@ -258,7 +258,7 @@
   border:1px solid #444;
   background-color:#aaa;
   overflow:hidden;
-  background:url(../../assets/img/dog.png);
+  background:url(../../assets/img/puppy.png);
   background-size:cover;
   background-position:center;
 }
@@ -295,7 +295,7 @@
 }
 
 .searchImg {
-  width: 150px;
+  width: 100px;
 }
 
 .search {
@@ -378,4 +378,9 @@
 .space-note {
   margin-top: 10px;
   font-style: italic;
+}
+
+.search .search-link {
+  text-decoration: none;
+  color: #000000;
 }
