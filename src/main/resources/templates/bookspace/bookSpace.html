@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/template :: head">
+    <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
+<div class="wrapper">
+   <div th:replace="fragments/template :: nav"></div>
+    <div clsas="container">
+        <span>Host: </span>
+        <span th:text="${space.hostLocation.user.firstName}"></span>
+        <br/>
+        <span>Location: </span>
+        <span th:text="${space.hostLocation.city}"></span>
+        <span>, </span>
+        <span th:text="${space.hostLocation.state}"></span>
+        <br/>
+        <span>Availabilty: </span>
+        <span th:text="${space.animalNumber}"></span>
+        <span> </span>
+        <span th:text="${space.animalType}"></span>
 
+
+    </div>
+
+    <form action="/requestSpace" class="form-format container form-design col-lg-6" method="post" th:object="${booking}">
+        <h3>Make a request for you animals to stay.</h3>
+        <h5>The host will approve or deny your request.</h5>
+        <div class="form-group">
+            <label for="animalNumber"><span>Number of </span><span th:text="${space.animalType}"></span></label>
+            <input class="form-control" type="text" th:field="*{numAnimals}"/>
+        </div>
+        <div class="form-group">
+            <label for="notes">Comments to Host (optional)</label>
+            <input class="form-control" type="text" th:field="*{notes}"/>
+        </div>
+        <input type="submit" class="btn btn-secondary" value="Request to Stay"/>
+    </form>
+</div>
 </body>
 </html>

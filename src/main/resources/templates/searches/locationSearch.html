@@ -85,7 +85,7 @@
                         <span th:text="${space.animalType}"></span>
                         <br/>
                         <span th:text="${space.notes}"></span>
-                        <button th:href="@{'/bookSpace/' + ${space.id}}"> Book Space</button>
+                        <a th:href="@{'/bookSpace/' + ${space.id}}" class="btn btn-secondary"> Book Space</a>
                     </li>
                 </ul>
 

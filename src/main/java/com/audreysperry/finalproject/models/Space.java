@@ -21,6 +21,8 @@ public class Space {
     @Column(name="image_path")
     private String imagePath;
 
+    private boolean active;
+
 
     @ManyToOne
     @JoinColumn(name="location_id")
