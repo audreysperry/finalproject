@@ -1,12 +1,9 @@
 package com.audreysperry.finalproject.controllers;
 
 
-import com.audreysperry.finalproject.models.BookingRequest;
-import com.audreysperry.finalproject.models.Space;
-import com.audreysperry.finalproject.models.User;
-import com.audreysperry.finalproject.repositories.BookingRequestRepository;
-import com.audreysperry.finalproject.repositories.SpaceRepository;
-import com.audreysperry.finalproject.repositories.UserRepository;
+import com.audreysperry.finalproject.models.*;
+import com.audreysperry.finalproject.models.Thread;
+import com.audreysperry.finalproject.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -30,6 +28,12 @@ public class BookSpaceController {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private ThreadRepository threadRepo;
+
+    @Autowired
+    private MessageRepository messageRepo;
 
     @RequestMapping(value="/requestSpace/{spaceid}")
     public String requestSpacePage(Model model,
@@ -83,6 +87,7 @@ public class BookSpaceController {
                                 @PathVariable("reqid") long reqid,
                                 Principal principal) {
         BookingRequest request = bookingRequestRepo.findOne(reqid);
+        User guest = request.getGuest();
         request.setHostResponse(true);
         int reqNumber = request.getNumAnimals();
         Space space = request.getSpace();
@@ -93,6 +98,7 @@ public class BookSpaceController {
         }
         space.setAnimalNumber(newAvailability);
 
+        // add current open requests to model to display on screen
         User host = userRepo.findByUsername(principal.getName());
         List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
         List<BookingRequest> openRequests = new ArrayList<BookingRequest>(){};
@@ -103,6 +109,24 @@ public class BookSpaceController {
             }
 
         }
+
+        // create new thread and send guest message of approval
+        Thread thread = new Thread();
+        thread.setHostName(host.getUsername());
+        thread.setHost(host);
+        thread.setGuestName(guest.getUsername());
+        thread.setGuest(guest);
+        threadRepo.save(thread);
+        Message message = new Message();
+        message.setNote(host.getUsername() + " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".");
+        message.setThread(thread);
+        message.setAuthorUsername(host.getUsername());
+        message.setRecipient(guest.getUsername());
+        message.setDate(new Date());
+        message.setReceiver(guest);
+        message.setSender(host);
+        messageRepo.save(message);
+
         spaceRepo.save(space);
         bookingRequestRepo.save(request);
         model.addAttribute("bookingreqs", openRequests);
