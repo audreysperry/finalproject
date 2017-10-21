@@ -92,6 +92,7 @@ public class HostController {
                            @RequestParam("location_id") long location_id) {
         HostLocation currentHostLocation = locationRepo.findById(location_id);
         space.setHostLocation(currentHostLocation);
+        space.setActive(true);
         spaceRepo.save(space);
         return "redirect:/editHost";
     }

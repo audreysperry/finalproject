@@ -73,14 +73,17 @@
             <h5>Availability:</h5>
             <ul>
                 <li th:each="space : ${location.spaces}">
-                    <span th:text="${space.animalNumber}"></span>
-                    <span> </span>
-                    <span th:text="${space.animalType}"></span>
-                    <br/>
-                    <span th:text="${space.notes}"></span>
+                    <div th:if="${space.active}">
+                        <span th:text="${space.animalNumber}"></span>
+                        <span> </span>
+                        <span th:text="${space.animalType}"></span>
+                        <br/>
+                        <span th:text="${space.notes}"></span>
+                        <a href="#" class="card-link">Send host a Message</a>
+                    </div>
+
                 </li>
             </ul>
-            <a href="#" class="card-link">Send host a Message</a>
         </div>
     </div>
 

@@ -75,4 +75,12 @@ public class Space {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

@@ -77,4 +77,35 @@ public class BookSpaceController {
         model.addAttribute("bookingreqs", openRequests);
         return "bookspace/requests";
     }
+
+    @RequestMapping(value="/acceptRequest/{reqid}", method = RequestMethod.POST)
+    public String acceptRequest(Model model,
+                                @PathVariable("reqid") long reqid,
+                                Principal principal) {
+        BookingRequest request = bookingRequestRepo.findOne(reqid);
+        request.setHostResponse(true);
+        int reqNumber = request.getNumAnimals();
+        Space space = request.getSpace();
+        int spaceNumber = space.getAnimalNumber();
+        int newAvailability = spaceNumber - reqNumber;
+        if (newAvailability <= 0) {
+            space.setActive(false);
+        }
+        space.setAnimalNumber(newAvailability);
+
+        User host = userRepo.findByUsername(principal.getName());
+        List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
+        List<BookingRequest> openRequests = new ArrayList<BookingRequest>(){};
+        for (BookingRequest bookingreq : tempRequests
+                ) {
+            if (bookingreq.isHostResponse() == null && bookingreq.getHost() == host) {
+                openRequests.add(bookingreq);
+            }
+
+        }
+        spaceRepo.save(space);
+        bookingRequestRepo.save(request);
+        model.addAttribute("bookingreqs", openRequests);
+        return "bookspace/requests";
+    }
 }

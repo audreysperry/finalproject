@@ -15,7 +15,9 @@
             <span th:text="${bookingReq.numAnimals}"></span>
             <span> </span>
             <span th:text="${bookingReq.space.animalType}"></span>
-            <a th:href="@{'/acceptRequest/' + ${bookingReq.id}}">Accept Request</a>
+            <form th:action="@{'/acceptRequest/' + ${bookingReq.id}}" method="post">
+                <input type="submit" value="Accept Request"/>
+            </form>
             <a th:href="@{'/acceptReqCloseSpace/' + ${bookingReq.id}}">Accept Request and Deactive Space</a>
             <a th:href="@{'/denyRequest/' + ${bookingReq.id}}">Deny Request</a>
 

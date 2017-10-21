@@ -80,12 +80,16 @@
                 <h5>Availability:</h5>
                 <ul>
                     <li th:each="space : ${location.spaces}">
-                        <span th:text="${space.animalNumber}"></span>
-                        <span> </span>
-                        <span th:text="${space.animalType}"></span>
-                        <br/>
-                        <span th:text="${space.notes}"></span>
-                        <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn btn-secondary"> Book Space</a>
+                        <div th:if="${space.active}">
+                            <span th:text="${space.animalNumber}"></span>
+                            <span> </span>
+                            <span th:text="${space.animalType}"></span>
+                            <br/>
+                            <span th:text="${space.notes}"></span>
+                            <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn btn-secondary"> Book Space</a>
+
+                        </div>
+
                     </li>
                 </ul>
 
