@@ -118,7 +118,9 @@ public class BookSpaceController {
         thread.setGuest(guest);
         threadRepo.save(thread);
         Message message = new Message();
-        message.setNote(host.getUsername() + " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".");
+        String noteForGuest = host.getUsername() + " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ". The address is " + space.getHostLocation().getStreetAddress() + " " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getState() + " " + space.getHostLocation().getZipCode();
+        message.setNote(noteForGuest);
+
         message.setThread(thread);
         message.setAuthorUsername(host.getUsername());
         message.setRecipient(guest.getUsername());
