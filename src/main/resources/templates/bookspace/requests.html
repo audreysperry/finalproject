@@ -18,10 +18,12 @@
             <form th:action="@{'/acceptRequest/' + ${bookingReq.id}}" method="post">
                 <input type="submit" value="Accept Request"/>
             </form>
-            <a th:href="@{'/acceptReqCloseSpace/' + ${bookingReq.id}}">Accept Request and Deactive Space</a>
-            <a th:href="@{'/denyRequest/' + ${bookingReq.id}}">Deny Request</a>
-
-
+            <form th:action="@{'/acceptReqCloseSpace/' + ${bookingReq.id}}" method="post">
+                <input type="submit" value="Accept Request and DeActivate Space"/>
+            </form>
+            <form th:action="@{'/denyRequest/' + ${bookingReq.id}}" method="post">
+                <input type="submit" value="Deny Request"/>
+            </form>
         </div>
     </div>
 </div>
