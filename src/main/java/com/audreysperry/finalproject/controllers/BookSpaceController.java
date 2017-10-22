@@ -135,7 +135,7 @@ public class BookSpaceController {
         }
 
         // create new thread and send guest message of approval
-        Thread thread = threadRepo.findByBookingRequest(request);
+        Thread thread = request.getThread();
         Message message = new Message();
         String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ". The address is " + space.getHostLocation().getStreetAddress() + " " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getState() + " " + space.getHostLocation().getZipCode();
         message.setNote(noteForGuest);
@@ -161,26 +161,21 @@ public class BookSpaceController {
         BookingRequest request = bookingRequestRepo.findOne(reqid);
         User guest = request.getGuest();
         User host = userRepo.findByUsername(principal.getName());
-        System.out.println(guest.getUsername());
         Space space = request.getSpace();
-        System.out.println(space.getAnimalType());
         request.setHostResponse(false);
         Thread thread = request.getThread();
 
-        System.out.println(request);
-        System.out.println(request.getNumAnimals());
-
-        // Send guest message of approval
-        Message message = new Message();
-        String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " was unable to accept your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".";
-        message.setNote(noteForGuest);
-        message.setThread(thread);
-        message.setAuthorUsername(host.getUsername());
-        message.setRecipient(guest.getUsername());
-        message.setDate(new Date());
-        message.setReceiver(guest);
-        message.setSender(host);
-        messageRepo.save(message);
+//        // Send guest message of denial
+//        Message message = new Message();
+//        String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " was unable to accept your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".";
+//        message.setNote(noteForGuest);
+//        message.setThread(thread);
+//        message.setAuthorUsername(host.getUsername());
+//        message.setRecipient(guest.getUsername());
+//        message.setDate(new Date());
+//        message.setReceiver(guest);
+//        message.setSender(host);
+//        messageRepo.save(message);
 
         spaceRepo.save(space);
         bookingRequestRepo.save(request);
@@ -216,7 +211,7 @@ public class BookSpaceController {
         // create new thread and send guest message of approval
         Thread thread = threadRepo.findByBookingRequest(request);
         Message message = new Message();
-        String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ". The address is " + space.getHostLocation().getStreetAddress() + " " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getState() + " " + space.getHostLocation().getZipCode();
+        String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ". The address for the space is " + space.getHostLocation().getStreetAddress() + " " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getState() + " " + space.getHostLocation().getZipCode();
         message.setNote(noteForGuest);
 
         message.setThread(thread);

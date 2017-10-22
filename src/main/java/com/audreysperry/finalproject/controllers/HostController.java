@@ -180,6 +180,20 @@ public class HostController {
         return "redirect:/editHost";
     }
 
+    @RequestMapping(value="/space/{spaceid}/deactivate", method = RequestMethod.POST)
+    public String deactivateSpaceListing(Principal principal,
+                                         @PathVariable("spaceid") long spaceid,
+                                         Model model) {
+        Space space = spaceRepo.findOne(spaceid);
+
+        if (principal.getName() == space.getHostLocation().getUser().getUsername()) {
+            space.setActive(false);
+            spaceRepo.save(space);
+        }
+
+        return "redirect:/editHost";
+    }
+
     @RequestMapping(value="/addLocationImg/{locationid}", method = RequestMethod.POST)
     public String addLocationImg(Principal principal,
                                  @PathVariable("locationid") long locationid,
