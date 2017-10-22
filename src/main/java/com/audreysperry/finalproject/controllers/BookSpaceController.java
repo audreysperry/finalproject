@@ -191,17 +191,7 @@ public class BookSpaceController {
         spaceRepo.save(space);
         bookingRequestRepo.save(request);
 
-        // add current open requests to model to display on screen
-        List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
-        List<BookingRequest> openRequests = new ArrayList<BookingRequest>(){};
-        for (BookingRequest bookingreq : tempRequests
-                ) {
-            if (bookingreq.isHostResponse() == null && bookingreq.getHost() == host) {
-                openRequests.add(bookingreq);
-            }
-        }
-        model.addAttribute("bookingreqs", openRequests);
-        return "bookspace/requests";
+        return "redirect:/requests";
 
     }
 
@@ -214,13 +204,13 @@ public class BookSpaceController {
         User host = userRepo.findByUsername(principal.getName());
         User guest = request.getGuest();
         request.setHostResponse(true);
-        int reqNumber = request.getNumAnimals();
         Space space = request.getSpace();
         space.setActive(false);
         space.setAnimalNumber(0);
+        spaceRepo.save(space);
 
         // create new thread and send guest message of approval
-        Thread thread = threadRepo.findByBookingRequest(request);
+        Thread thread = request.getThread();
         Message message = new Message();
         String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ". The address for the space is " + space.getHostLocation().getStreetAddress() + " " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getState() + " " + space.getHostLocation().getZipCode();
         message.setNote(noteForGuest);
@@ -233,18 +223,7 @@ public class BookSpaceController {
         message.setSender(host);
         messageRepo.save(message);
 
-        // add current open requests to model to display on screen
-        List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
-        List<BookingRequest> openRequests = new ArrayList<BookingRequest>(){};
-        for (BookingRequest bookingreq : tempRequests
-                ) {
-            if (bookingreq.isHostResponse() == null && bookingreq.getHost() == host) {
-                openRequests.add(bookingreq);
-            }
-        }
-
-        model.addAttribute("bookingreqs", openRequests);
-        return "bookspace/requests";
+        return "redirect:/requests";
     }
 
     @RequestMapping(value="/cancelRequest/{reqid}", method = RequestMethod.POST)
