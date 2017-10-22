@@ -61,7 +61,7 @@
                 <input type="submit" value="Cancel Reservation"/>
             </form>
         </div>
-        <h1>Your Denied Requests</h1>
+        <h1>Your Denied/Cancelled Requests</h1>
         <div th:each="deniedReq : ${deniedReqs}">
             <h2 th:text="${deniedReq.host.firstName}"></h2>
             <span th:text="${deniedReq.numAnimals}"></span>

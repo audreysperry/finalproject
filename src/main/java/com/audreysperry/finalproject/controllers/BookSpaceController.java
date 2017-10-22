@@ -36,8 +36,19 @@ public class BookSpaceController {
     public String requestSpacePage(Model model,
                                 Principal principal,
                                 @PathVariable("spaceid") long spaceid) {
-
+        Boolean hasAlreadyBooked = false;
+        User currentUser = userRepo.findByUsername(principal.getName());
+        List<BookingRequest> bookingRequests = (List<BookingRequest>) bookingRequestRepo.findAll();
         Space space = spaceRepo.findOne(spaceid);
+
+        for (BookingRequest bookingRequest : bookingRequests
+             ) {
+            if (bookingRequest.getGuest() == currentUser && bookingRequest.getSpace() == space) {
+                hasAlreadyBooked = true;
+            }
+
+        }
+        model.addAttribute("requestSent", hasAlreadyBooked);
         model.addAttribute("space", space);
         model.addAttribute("user", new User());
         model.addAttribute("booking", new BookingRequest());
@@ -240,28 +251,11 @@ public class BookSpaceController {
     public String cancelRequest(Model model,
                                 Principal principal,
                                 @PathVariable("reqid") long reqid) {
-        bookingRequestRepo.delete(reqid);
+        BookingRequest request = bookingRequestRepo.findOne(reqid);
+        request.setHostResponse(false);
+        bookingRequestRepo.save(request);
 
-        User guest = userRepo.findByUsername(principal.getName());
-        List<BookingRequest> tempGuestRequests = bookingRequestRepo.findAllByGuest(guest);
-        List<BookingRequest> pendingRequests = new ArrayList<BookingRequest>() {};
-        List<BookingRequest> acceptedRequests = new ArrayList<BookingRequest>() {};
-        List<BookingRequest> deniedRequests = new ArrayList<BookingRequest>() {};
-        for(BookingRequest bookReq : tempGuestRequests
-                ) {
-            if (bookReq.isHostResponse() == null && bookReq.getGuest() == guest) {
-                pendingRequests.add(bookReq);
-            } else if (bookReq.isHostResponse() == true && bookReq.getGuest() == guest) {
-                acceptedRequests.add(bookReq);
-            } else if (bookReq.isHostResponse() == false && bookReq.getGuest() == guest) {
-                deniedRequests.add(bookReq);
-            }
-        }
-        model.addAttribute("deniedReqs", deniedRequests);
-        model.addAttribute("acceptedReqs", acceptedRequests);
-        model.addAttribute("pendingReqs", pendingRequests);
-
-        return "bookspace/requests";
+        return "redirect:/requests";
     }
 
     @RequestMapping(value="/cancelReservation/{reqid}", method = RequestMethod.POST)

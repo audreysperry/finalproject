@@ -79,18 +79,19 @@
                 <div class="card-title"> <span th:text="${location.city}"></span><span th:text="${location.state}"> </span></div>
                 <h5>Availability:</h5>
                 <ul>
-                    <li th:each="space : ${location.spaces}">
+                    <div th:each="space : ${location.spaces}">
                         <div th:if="${space.active}">
+                            <li>
                             <span th:text="${space.animalNumber}"></span>
                             <span> </span>
                             <span th:text="${space.animalType}"></span>
                             <br/>
                             <span th:text="${space.notes}"></span>
                             <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn btn-secondary"> Book Space</a>
-
+                            </li>
                         </div>
 
-                    </li>
+                    </div>
                 </ul>
 
                 <a th:href="@{'/messageHost/' + ${location.user.id}}" class="card-link">Send host a Message</a>

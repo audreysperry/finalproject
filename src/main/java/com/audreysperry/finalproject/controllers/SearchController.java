@@ -32,9 +32,24 @@ public class SearchController {
     private SpaceRepository spaceRepo;
 
 
+
+
     @RequestMapping(value="/locationSearch", method = RequestMethod.GET)
     public String locationSearchPage(Model model) {
+
+        List<HostLocation> hostLocations = locationRepo.findAll();
+//        for (HostLocation location : hostLocations
+//             ) {
+//            List<Space> locationSpaces = location.getSpaces();
+//            for (Space space : locationSpaces
+//                 ) {
+//                if (space.isActive() == false)
+//
+//            }
+
+//        }
         model.addAttribute("user", new User());
+        model.addAttribute("locations", hostLocations);
         return "/searches/locationSearch";
     }
 
@@ -118,6 +133,7 @@ public class SearchController {
     public String displaySpaceDetails(
             @PathVariable ("animalType") String animalType,
             Model model) {
+
         model.addAttribute("spaces", spaceRepo.findAllByAnimalType(animalType));
         model.addAttribute("animalType", animalType);
         model.addAttribute("user", new User());
@@ -128,7 +144,6 @@ public class SearchController {
     public String filterByState(Model model,
                                 @RequestParam("state") String state,
                                 @RequestParam("animalType") String animalType) {
-        System.out.println(state);
         List<Space> spaces = spaceRepo.findAllByAnimalTypeAndHostLocation_State(animalType, state);
         model.addAttribute("spaces", spaces);
         model.addAttribute("animalType", animalType);

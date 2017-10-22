@@ -75,7 +75,7 @@
                 <p class="card-text" th:text="${space.notes}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <img th:src="@{'/files/' + ${space.imagePath}}" class="space-img" alt="" />
                 <a th:href="@{'/messageHost/' + ${space.hostLocation.user.id}}" class="card-link">Send host a Message</a>
-                <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn btn-secondary"> Book Space</a>
+                <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn btn-secondary">Submit Booking Request</a>
             </div>
         </div>
     </div>

@@ -23,20 +23,27 @@
 
 
     </div>
+    <div th:if="${requestSent}">
+        <h2>You've already submitted a request for this space.</h2>
+        <a href="#">Try a new Search</a>
+    </div>
 
-    <form th:action="@{'/requestSpace/' + ${space.id}}" class="form-format container form-design col-lg-6" method="post" th:object="${booking}">
-        <h3>Make a request for you animals to stay.</h3>
-        <h5>The host will approve or deny your request.</h5>
-        <div class="form-group">
-            <label for="animalNumber"><span>Number of </span><span th:text="${space.animalType}"></span></label>
-            <input class="form-control" type="text" th:field="*{numAnimals}"/>
-        </div>
-        <div class="form-group">
-            <label for="notes">Comments to Host (optional)</label>
-            <input class="form-control" type="text" th:field="*{notes}"/>
-        </div>
-        <input type="submit" class="btn btn-secondary" value="Request to Stay"/>
-    </form>
+    <div th:unless="${requestSent}">
+        <form th:action="@{'/requestSpace/' + ${space.id}}" class="form-format container form-design col-lg-6" method="post" th:object="${booking}">
+            <h3>Make a request for you animals to stay.</h3>
+            <h5>The host will approve or deny your request.</h5>
+            <div class="form-group">
+                <label for="animalNumber"><span>Number of </span><span th:text="${space.animalType}"></span></label>
+                <input class="form-control" type="text" th:field="*{numAnimals}"/>
+            </div>
+            <div class="form-group">
+                <label for="notes">Comments to Host (optional)</label>
+                <input class="form-control" type="text" th:field="*{notes}"/>
+            </div>
+            <input type="submit" class="btn btn-secondary" value="Request to Stay"/>
+        </form>
+    </div>
+
 </div>
 <span th:replace="fragments/template :: js"></span>
 </body>
