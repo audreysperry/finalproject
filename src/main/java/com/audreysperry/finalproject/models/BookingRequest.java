@@ -32,6 +32,10 @@ public class BookingRequest {
 
     private String notes;
 
+    @OneToOne
+    @JoinColumn(name="thread_id")
+    private Thread thread;
+
     public long getId() {
         return id;
     }
@@ -88,4 +92,11 @@ public class BookingRequest {
         this.host = host;
     }
 
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
 }

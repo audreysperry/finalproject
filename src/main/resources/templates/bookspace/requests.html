@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="fragments/template :: head">
     <meta charset="UTF-8"/>
     <title>Title</title>
@@ -8,7 +8,7 @@
 <div class="wrapper">
     <div th:replace="fragments/template :: nav"></div>
 
-    <div class="container">
+    <div class="container" sec:authorize="hasRole('ROLE_HOST')">
         <h1>Your Open Requests</h1>
         <div th:each="bookingReq : ${bookingreqs}">
             <h2 th:text="${bookingReq.guest.firstName}"></h2>
@@ -24,6 +24,53 @@
             <form th:action="@{'/denyRequest/' + ${bookingReq.id}}" method="post">
                 <input type="submit" value="Deny Request"/>
             </form>
+        </div>
+    </div>
+
+    <div class="container" sec:authorize="hasRole('ROLE_GENERAL')">
+        <h1>Your Pending Requests</h1>
+        <div th:each="pendingReq : ${pendingReqs}">
+            <h2 th:text="${pendingReq.host.firstName}"></h2>
+            <span th:text="${pendingReq.numAnimals}"></span>
+            <span> </span>
+            <span th:text="${pendingReq.space.animalType}"></span>
+            <br/>
+            <span th:text="${pendingReq.space.hostLocation.city}"></span>
+            <span>, </span>
+            <span th:text="${pendingReq.space.hostLocation.state}"></span>
+            <form th:action="@{'/cancelRequest/' + ${pendingReq.id}}" method="post">
+                <input type="submit" value="Cancel Request"/>
+            </form>
+
+        </div>
+        <h1>Your Accepted Requests</h1>
+        <div th:each="acceptedReq : ${acceptedReqs}">
+            <h2 th:text="${acceptedReq.host.firstName}"></h2>
+            <span th:text="${acceptedReq.numAnimals}"></span>
+            <span> </span>
+            <span th:text="${acceptedReq.space.animalType}"></span>
+            <br/>
+            <span th:text="${acceptedReq.space.hostLocation.city}"></span>
+            <span>, </span>
+            <span th:text="${acceptedReq.space.hostLocation.state}"></span>
+            <form th:action="@{'/cancelReservation/' + ${acceptedReq.id}}" method="post">
+                <div class="form-group">
+                    <label for="message">Message to Host</label>
+                    <textarea class="form-control" type="text" name="message"></textarea>
+                </div>
+                <input type="submit" value="Cancel Reservation"/>
+            </form>
+        </div>
+        <h1>Your Denied Requests</h1>
+        <div th:each="deniedReq : ${deniedReqs}">
+            <h2 th:text="${deniedReq.host.firstName}"></h2>
+            <span th:text="${deniedReq.numAnimals}"></span>
+            <span> </span>
+            <span th:text="${deniedReq.space.animalType}"></span>
+            <br/>
+            <span th:text="${deniedReq.space.hostLocation.city}"></span>
+            <span>, </span>
+            <span th:text="${deniedReq.space.hostLocation.state}"></span>
         </div>
     </div>
 </div>

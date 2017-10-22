@@ -33,6 +33,9 @@ public class Thread {
     @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
     private List<Message> messages;
 
+    @OneToOne(mappedBy = "thread", cascade = CascadeType.ALL)
+    private BookingRequest bookingRequest;
+
     public long getId() {
         return id;
     }

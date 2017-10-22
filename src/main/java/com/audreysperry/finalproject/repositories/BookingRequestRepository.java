@@ -12,4 +12,6 @@ import java.util.List;
 @Repository
 public interface BookingRequestRepository extends CrudRepository<BookingRequest, Long> {
 List<BookingRequest> findAllByHost(User host);
+
+List<BookingRequest> findAllByGuest(User guest);
 }

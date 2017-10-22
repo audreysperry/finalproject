@@ -1,5 +1,6 @@
 package com.audreysperry.finalproject.repositories;
 
+import com.audreysperry.finalproject.models.BookingRequest;
 import com.audreysperry.finalproject.models.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,6 @@ public interface ThreadRepository extends CrudRepository<Thread, Long>{
     List<Thread> findAllByGuestName(String guestName);
     List<Thread> findAllByGuest(User guest);
     List<Thread> findAllByHost(User host);
+
+    Thread findByBookingRequest(BookingRequest bookingRequest);
 }
