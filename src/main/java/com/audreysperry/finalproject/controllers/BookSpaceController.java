@@ -58,13 +58,13 @@ public class BookSpaceController {
         thread.setHost(host);
         thread.setHostName(host.getUsername());
         thread.setGuestName(guest.getUsername());
+        threadRepo.save(thread);
         booking.setThread(thread);
         booking.setGuest(guest);
         booking.setHost(host);
         booking.setSpace(space);
         booking.setHostResponse(null);
         bookingRequestRepo.save(booking);
-        threadRepo.save(thread);
 
         return "bookspace/confirmScreen";
     }
@@ -160,26 +160,20 @@ public class BookSpaceController {
 
         BookingRequest request = bookingRequestRepo.findOne(reqid);
         User guest = request.getGuest();
-        Space space = request.getSpace();
-        request.setHostResponse(false);
-
-        // add current open requests to model to display on screen
         User host = userRepo.findByUsername(principal.getName());
-        List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
-        List<BookingRequest> openRequests = new ArrayList<BookingRequest>(){};
-        for (BookingRequest bookingreq : tempRequests
-                ) {
-            if (bookingreq.isHostResponse() == null && bookingreq.getHost() == host) {
-                openRequests.add(bookingreq);
-            }
-        }
+        System.out.println(guest.getUsername());
+        Space space = request.getSpace();
+        System.out.println(space.getAnimalType());
+        request.setHostResponse(false);
+        Thread thread = request.getThread();
 
-        // create new thread and send guest message of approval
-        Thread thread = threadRepo.findByBookingRequest(request);
+        System.out.println(request);
+        System.out.println(request.getNumAnimals());
+
+        // Send guest message of approval
         Message message = new Message();
         String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " was unable to accept your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".";
         message.setNote(noteForGuest);
-
         message.setThread(thread);
         message.setAuthorUsername(host.getUsername());
         message.setRecipient(guest.getUsername());
@@ -190,6 +184,16 @@ public class BookSpaceController {
 
         spaceRepo.save(space);
         bookingRequestRepo.save(request);
+
+        // add current open requests to model to display on screen
+        List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
+        List<BookingRequest> openRequests = new ArrayList<BookingRequest>(){};
+        for (BookingRequest bookingreq : tempRequests
+                ) {
+            if (bookingreq.isHostResponse() == null && bookingreq.getHost() == host) {
+                openRequests.add(bookingreq);
+            }
+        }
         model.addAttribute("bookingreqs", openRequests);
         return "bookspace/requests";
 
@@ -272,6 +276,13 @@ public class BookSpaceController {
                                     @RequestParam("message") String note) {
         User guest = userRepo.findByUsername(principal.getName());
         BookingRequest bookingReq = bookingRequestRepo.findOne(reqid);
+
+        Space space = bookingReq.getSpace();
+        int numAnimalReq = bookingReq.getNumAnimals();
+        int numAnimalSpace = space.getAnimalNumber();
+        int newSpaceAvail = numAnimalSpace + numAnimalReq;
+        space.setAnimalNumber(newSpaceAvail);
+        spaceRepo.save(space);
         User host = bookingReq.getHost();
         Thread thread = threadRepo.findByBookingRequest(bookingReq);
         Message message = new Message();

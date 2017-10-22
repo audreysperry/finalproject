@@ -96,4 +96,11 @@ public class Thread {
         return unreadMessages.size();
     }
 
+    public BookingRequest getBookingRequest() {
+        return bookingRequest;
+    }
+
+    public void setBookingRequest(BookingRequest bookingRequest) {
+        this.bookingRequest = bookingRequest;
+    }
 }

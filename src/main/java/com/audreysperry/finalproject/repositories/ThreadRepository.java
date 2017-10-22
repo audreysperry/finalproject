@@ -16,5 +16,5 @@ public interface ThreadRepository extends CrudRepository<Thread, Long>{
     List<Thread> findAllByGuest(User guest);
     List<Thread> findAllByHost(User host);
 
-    Thread findByBookingRequest(BookingRequest bookingRequest);
+    Thread findByBookingRequest(BookingRequest request);
 }
