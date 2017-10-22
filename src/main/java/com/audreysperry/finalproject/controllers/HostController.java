@@ -175,6 +175,7 @@ public class HostController {
                                   @RequestParam("location_id") long location_id) {
         HostLocation hostLocation = locationRepo.findOne(location_id);
         space.setHostLocation(hostLocation);
+        space.setActive(true);
         spaceRepo.save(space);
 
         return "redirect:/editHost";
@@ -185,8 +186,10 @@ public class HostController {
                                          @PathVariable("spaceid") long spaceid,
                                          Model model) {
         Space space = spaceRepo.findOne(spaceid);
+        User currentUser = userRepo.findByUsername(principal.getName());
 
-        if (principal.getName() == space.getHostLocation().getUser().getUsername()) {
+
+        if (space.getHostLocation().getUser() == currentUser) {
             space.setActive(false);
             spaceRepo.save(space);
         }
