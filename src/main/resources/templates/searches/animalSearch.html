@@ -8,49 +8,67 @@
 <div class="wrapper">
     <div  th:replace="fragments/template :: nav"></div>
 
-
+<div class="animal-search-container">
+    <div>
+        <img class="img-search-sm" src="/assets/img/pet.png" alt=""/>
+        <h3>Search by Animal Type</h3>
+        <p class="search-desc">Find a safe space for your pets or animals while you seek safety for you and your family. Browse farms, shelters, and homes around the country where people have offered to care for your pets, for free.</p>
+    </div>
     <div class="row">
         <a href="location/Dogs">
-            <div class="col-sm-3 animalItem">
-                <div>Dogs</div>
+            <div class="col-lg-3 animalItem">
+                <img class="animal-search-icon" src="/assets/img/dogicon.png" alt=""/>
+                <h4>Dogs</h4>
             </div>
         </a>
         <a href="location/Cats">
-            <div class="col-sm-3 animalItem">
-                <div>Cats</div>
+            <div class="col-lg-3 animalItem">
+                <img class="animal-search-icon" src="/assets/img/caticon.png" alt=""/>
+                <h4>Cats</h4>
             </div>
         </a>
         <a href="location/Birds">
-            <div class="col-sm-3 animalItem">
-                <div>Birds</div>
+            <div class="col-lg-3 animalItem">
+                <img class="animal-search-icon" src="/assets/img/birdicon.png" alt=""/>
+
+                <h4>Birds</h4>
             </div>
         </a>
         <a href="location/Other Domestic Animals">
-            <div class="col-sm-3 animalItem">
-                <div>Other Domestic Animals</div>
+            <div class="col-lg-3 animalItem">
+                <img class="animal-search-icon" src="/assets/img/rabbiticon.png" alt=""/>
+                <h4>Other Domestic Animals</h4>
             </div>
         </a>
         <a href="location/Chickens">
-            <div class="col-sm-3 animalItem">
-                <div>Chickens</div>
+            <div class="col-lg-3 animalItem">
+                <img class="animal-search-icon" src="/assets/img/chickenicon.png" alt=""/>
+                <h4>Chickens</h4>
             </div>
         </a>
         <a href="location/Horses">
-            <div class="col-sm-3 animalItem">
-                <div>Horses</div>
+            <div class="col-lg-3 animalItem">
+                <img class="animal-search-icon" src="/assets/img/horseicon.png" alt=""/>
+                <h4>Horses</h4>
             </div>
         </a>
         <a href="location/Cows">
-            <div class="col-sm-3 animalItem">
-                <div>Cows</div>
+            <div class="col-lg-3  animalItem">
+                <img class="animal-search-icon" src="/assets/img/cowicon.png" alt=""/>
+                <h4>Cows</h4>
             </div>
         </a>
         <a href="location/Other Farm Animals">
-            <div class="col-sm-3 animalItem">
-                <div>Other Farm Animals</div>
+            <div class="col-lg-3  animalItem">
+                <img class="animal-search-icon" src="/assets/img/goaticon.png" alt=""/>
+                <h4>Other Farm Animals</h4>
             </div>
         </a>
     </div>
+
+
+</div>
+
     <span th:replace="fragments/template :: js"></span>
 
 </div>

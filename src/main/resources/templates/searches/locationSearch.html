@@ -85,28 +85,34 @@
             <div class="panel panel-prim col-lg-10" th:each="location : ${locations}">
                 <div class="panel-body">
 
-                    <div class="panel-title title-panel h4"><span th:text="${location.type}"></span><span> </span><span class="city-state" th:text="${location.city}"></span><span class="city-state">, </span><span class="city-state" th:text="${location.state}"> </span></div>
-                    <div></div>
-                   <div><span>Host: </span><span th:text="${location.user.firstName}"></span></div>
-                    <a th:href="@{'/messageHost/' + ${location.user.id}}" class="btn btn-default btn-sm">Message Host</a>
+                    <div class="panel-title title-panel h4">
+                        <img class="img-search-sm" th:if="${location.getType().equals('Farm')}" src="/assets/img/farm.png" alt=""/>
+                        <img class="img-search-sm" th:if="${location.getType().equals('Home')}" src="/assets/img/shelter.png" alt=""/>
+                        <img class="img-search-sm" th:if="${location.getType().equals('Shelter')}" src="/assets/img/animalshelter.png" alt=""/>
 
-                        <div th:each="space : ${location.spaces}">
+                        <span th:text="${location.type}"></span><span> </span><span class="city-state" th:text="${location.city}"></span><span class="city-state">, </span><span class="city-state" th:text="${location.state}"> </span></div>
+                    <div></div>
+                   <div class="host-info"><span>Host: </span><span th:text="${location.user.firstName}"></span></div>
+                    <a th:href="@{'/messageHost/' + ${location.user.id}}" class="btn btn-default btn-sm message-btn">Message Host</a>
+
+                        <div class="space-div" th:each="space : ${location.spaces}">
                             <div th:if="${space.active}">
                                 <div class="space-avail col-lg-11">
-                                    <div class="col-lg-8">
+                                    <div class="">
                                         <div class="space-search-img pull-left" >
                                             <img th:src="@{'/files/' + ${space.imagePath}}" class="object-fit" alt=""/>
                                         </div>
-                                        <h4>Availability </h4>
+                                        <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn booking-btn pull-right">Create Booking Request</a>
+
+                                        <h4 class="space-info">Availability </h4>
                                         <span th:text="${space.animalNumber}"></span>
                                         <span> </span>
                                         <span th:text="${space.animalType}"></span>
                                         <br/>
-                                        <h4>Notes from Host</h4>
+                                        <h4 class="space-info">Notes from Host</h4>
                                         <span th:text="${space.notes}"></span>
                                     </div>
 
-                                    <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn col-lg-4 booking-btn">Create Booking Request</a>
 
                                 </div>
                             </div>

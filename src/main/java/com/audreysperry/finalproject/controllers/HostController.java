@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class HostController {
@@ -37,6 +38,9 @@ public class HostController {
 
     @Autowired
     private ThreadRepository threadRepo;
+
+    @Autowired
+    private BookingRequestRepository bookingRepo;
 
     @RequestMapping(value="/host", method = RequestMethod.GET)
     public String becomeHost(Model model) {
@@ -189,9 +193,16 @@ public class HostController {
         User currentUser = userRepo.findByUsername(principal.getName());
 
 
+
         if (space.getHostLocation().getUser() == currentUser) {
             space.setActive(false);
             spaceRepo.save(space);
+            List<BookingRequest> openRequests = bookingRepo.findAllBySpace(space);
+            for (BookingRequest openReq : openRequests
+                    ) { openReq.setHostResponse(false);
+                bookingRepo.save(openReq);
+
+            }
         }
 
         return "redirect:/editHost";
