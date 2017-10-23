@@ -67,8 +67,8 @@
     </form>
 
     <h1 th:text="${type}"></h1>
-    <div class="card" th:each="location : ${locations}">
-        <div class="card-block">
+    <div class="panel" th:each="location : ${locations}">
+        <div class="panel-body">
             <div class="card-title"> <span th:text="${location.city}"></span><span th:text="${location.state}"> </span></div>
             <h5>Availability:</h5>
             <ul>
@@ -79,10 +79,10 @@
                         <span th:text="${space.animalType}"></span>
                         <br/>
                         <span th:text="${space.notes}"></span>
-                        <a href="#" class="card-link">Send host a Message</a>
+                        <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn btn-secondary"> Request a Booking</a>
                     </div>
-
                 </li>
+                <a th:href="@{'/messageHost/' + ${location.user.id}}" class="card-link">Send Host a Message</a>
             </ul>
         </div>
     </div>
