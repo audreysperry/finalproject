@@ -7,18 +7,26 @@
 <body>
 <div class="wrapper">
     <div th:replace="fragments/template :: nav"></div>
+    <div class="container">
+        <div class="message-heading">
+            <img class="img-search-sm" src="/assets/img/message.png" alt=""/>
+            <span class="h3">Your Message Threads</span>
+            <p class="search-desc">Communication between you and those looking for a safe space for their pets.</p>
+        </div>
+        <div class="thread" th:each="thread : ${threads}">
+            <a class="thread-link" th:href="@{'/thread/' + ${thread.id}}">
+                <span sec:authorize="hasRole('ROLE_HOST')" th:text="${thread.guest.firstName}"></span>
+                <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
 
-    <h1>HI</h1>
-    <div th:each="thread : ${threads}">
-        <a th:href="@{'/thread/' + ${thread.id}}">
-            <span>View messages between you and</span>
-            <span sec:authorize="hasRole('ROLE_HOST')" th:text="${thread.guest.firstName}"></span>
-            <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
-        </a>
-        <span>Unread messages: </span>
-        <span th:text="${thread.getUnreadMessages(#authentication.getPrincipal())}"></span>
+            <div>
+                <span>Unread messages: </span>
+                <span th:text="${thread.getUnreadMessages(#authentication.getPrincipal())}"></span>
+            </div>
+            </a>
+        </div>
     </div>
-</div>
+    </div>
+
 
 <span th:replace="fragments/template :: js"></span>
 </body>

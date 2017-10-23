@@ -7,15 +7,36 @@
 <body>
 <div class="wrapper">
     <div th:replace="fragments/template :: nav"></div>
-    <div th:each="message : ${messages}">
-        <div th:text="${message.note}"></div>
-        <div th:text="${message.authorUsername}"></div>
+
+    <div class="messages container">
+        <div class="message-detail-heading">
+            <img class="img-search-sm" src="/assets/img/message.png" alt=""/>
+            <span class="h3">Messages between you and </span>
+            <span class="h3" th:if="${thread.hostName.equals(principal.getName())}" th:text="${thread.guestName}"></span>
+            <span class="h3" th:unless="${thread.hostName.equals(principal.getName())}" th:text="${thread.hostName}"></span>
+        </div>
+
+        <div th:each="message : ${messages}">
+            <div th:if="${message.authorUsername.equals(principal.getName())}" class="loggedin">
+                <div th:text="${message.note}"></div>
+            </div>
+            <div th:unless="${message.authorUsername.equals(principal.getName())}" class="notloggedin">
+                <div th:text="${message.note}"></div>
+            </div>
+
+        </div>
+        <form th:action="@{'/replyMessage/' + ${thread.id}}" method="post" class="form-format container col-lg-6" th:object="${message}">
+            <h4>Send a new message</h4>
+            <div class="form-group">
+                <textarea type="text" th:field="*{note}" class="form-control"></textarea>
+
+            </div>
+            <input type="submit" class="btn btn-default" value="Add Message" />
+        </form>
+
     </div>
 
-    <form th:action="@{'/replyMessage/' + ${thread.id}}" method="post" th:object="${message}">
-        <textarea type="text" th:field="*{note}"></textarea>
-        <input type="submit" value="Add Message" />
-    </form>
+
 </div>
 
 

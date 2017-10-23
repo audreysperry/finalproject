@@ -519,3 +519,60 @@
 .shelter-icon {
     max-width: 150px;
 }
+
+.thread {
+    border: 1px solid #21a9af;
+    padding: 15px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    margin: 5px 150px;
+}
+
+.thread-link {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.message-heading {
+    margin: 20px 0px;
+}
+
+.loggedin {
+    background-color: #21a9af;
+    max-width: 350px;
+    margin-left: 300px;
+    /*margin-left: 325px;*/
+    margin-bottom: 10px;
+    color: white;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.notloggedin {
+    background-color: #d9d9d9;
+    max-width: 350px;
+    /*margin-right: 325px;*/
+    margin-bottom: 10px;
+    color: white;
+    border-radius: 3px;
+    padding: 10px;
+
+}
+
+.message-detail-heading {
+    margin: 20px 20px 20px 0px;
+}
+
+.messages {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.reply-form {
+    margin-left: 300px;
+    margin-top: 50px;
+}
+

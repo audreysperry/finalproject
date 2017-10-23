@@ -97,7 +97,8 @@ public class MessagingController {
                                   @PathVariable("thread_id") long thread_id) {
         Thread currentThread = threadRepo.findOne(thread_id);
         User loggedInUser = userRepo.findByUsername(principal.getName());
-        List<Message> currentMessages = currentThread.getMessages();
+        List<Message> currentMessages = messageRepo.findAllByThreadOrderByDateAsc(currentThread);
+       // List<Message> currentMessages = currentThread.getMessages();
         for (Message message: currentMessages
              ) { if(message.getReceiver() == loggedInUser)
             message.setMessageRead(true);
@@ -139,7 +140,7 @@ public class MessagingController {
         model.addAttribute("message", new Message());
 
 
-        return "messages/messageThreadDetails";
+        return "redirect:/thread/" + thread_id;
 
 
     }
