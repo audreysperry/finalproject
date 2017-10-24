@@ -7,10 +7,14 @@
 <body>
 <div class="wrapper">
     <div th:replace="fragments/template :: nav"></div>
-
     <form class="form-format container form-design col-lg-6" th:action="@{'/addMessage/' + ${host.id}}" method="post" th:object="${message}">
-        <textarea type="text" th:field="*{note}" placeholder="Enter message for host"></textarea>
-        <input type="submit" value="Send Message"/>
+        <div class="form-group">
+            <span class="h3">Send </span><span class="h3" th:text="${host.firstName}"></span><span class="h3"> a message</span>
+        </div>
+        <div class="form-group">
+            <textarea type="text" class="form-control" th:field="*{note}" placeholder="Enter message for host"></textarea>
+        </div>
+        <input type="submit" class="btn btn default" value="Send Message"/>
     </form>
 
 </div>

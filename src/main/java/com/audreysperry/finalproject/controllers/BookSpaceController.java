@@ -4,6 +4,7 @@ package com.audreysperry.finalproject.controllers;
 import com.audreysperry.finalproject.models.*;
 import com.audreysperry.finalproject.models.Thread;
 import com.audreysperry.finalproject.repositories.*;
+import org.apache.catalina.Host;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class BookSpaceController {
     private SpaceRepository spaceRepo;
 
     @Autowired
+    private HostLocationRepository locationRepo;
+
+    @Autowired
     private BookingRequestRepository bookingRequestRepo;
 
     @Autowired
@@ -31,6 +35,9 @@ public class BookSpaceController {
 
     @Autowired
     private MessageRepository messageRepo;
+
+    @Autowired
+    private BookingRequestRepository bookingRepo;
 
     @RequestMapping(value="/requestSpace/{spaceid}")
     public String requestSpacePage(Model model,
@@ -85,6 +92,8 @@ public class BookSpaceController {
                                   Principal principal) {
         // Requests if logged in user is host.
         User host = userRepo.findByUsername(principal.getName());
+        HostLocation hostLocation = locationRepo.findByUser(host);
+        List<Space> spaces = hostLocation.getSpaces();
         List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
         List<BookingRequest> openRequests = new ArrayList<BookingRequest>(){};
         for (BookingRequest bookingreq : tempRequests
@@ -114,6 +123,7 @@ public class BookSpaceController {
         model.addAttribute("deniedReqs", deniedRequests);
         model.addAttribute("acceptedReqs", acceptedRequests);
         model.addAttribute("pendingReqs", pendingRequests);
+        model.addAttribute("spaces", spaces);
         model.addAttribute("bookingreqs", openRequests);
         return "bookspace/requests";
     }
@@ -161,7 +171,7 @@ public class BookSpaceController {
         spaceRepo.save(space);
         bookingRequestRepo.save(request);
         model.addAttribute("bookingreqs", openRequests);
-        return "bookspace/requests";
+        return "redirect:/requests";
     }
 
     @RequestMapping(value="/denyRequest/{reqid}", method = RequestMethod.POST)
@@ -209,7 +219,13 @@ public class BookSpaceController {
         space.setAnimalNumber(0);
         spaceRepo.save(space);
 
-        // create new thread and send guest message of approval
+        List<BookingRequest> openRequests = bookingRepo.findAllBySpace(space);
+        for (BookingRequest openReq : openRequests
+                ) { openReq.setHostResponse(false);
+            bookingRepo.save(openReq);
+        }
+
+        //  Send guest message of approval
         Thread thread = request.getThread();
         Message message = new Message();
         String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ". The address for the space is " + space.getHostLocation().getStreetAddress() + " " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getState() + " " + space.getHostLocation().getZipCode();
@@ -262,6 +278,6 @@ public class BookSpaceController {
         message.setAuthorUsername(guest.getFirstName());
         messageRepo.save(message);
 
-        return "bookspace/requests";
+        return "redirect:/requests";
     }
 }

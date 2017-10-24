@@ -11,7 +11,8 @@
         <div class="message-heading">
             <img class="img-search-sm" src="/assets/img/message.png" alt=""/>
             <span class="h3">Your Message Threads</span>
-            <p class="search-desc">Communication between you and those looking for a safe space for their pets.</p>
+            <p sec:authorize="hasRole('ROLE_HOST')" class="search-desc">Communication between you and those looking for a safe space for their pets and animals</p>
+            <p sec:authorize="hasRole('ROLE_GENERAL')" class="search-desc">Communication between you and potential hosts for your pets or animals.</p>
         </div>
         <div class="thread" th:each="thread : ${threads}">
             <a class="thread-link" th:href="@{'/thread/' + ${thread.id}}">

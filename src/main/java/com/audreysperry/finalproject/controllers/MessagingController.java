@@ -69,7 +69,7 @@ public class MessagingController {
        messageRepo.save(message);
 
 
-        return "home";
+        return "redirect:/messages";
 
     }
 
