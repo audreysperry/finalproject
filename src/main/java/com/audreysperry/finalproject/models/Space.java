@@ -1,6 +1,7 @@
 package com.audreysperry.finalproject.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="spaces")
@@ -27,6 +28,9 @@ public class Space {
     @ManyToOne
     @JoinColumn(name="location_id")
     private HostLocation hostLocation;
+
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
+    private List<BookingRequest> bookingRequests;
 
     public String getNotes() {
         return notes;
@@ -82,5 +86,13 @@ public class Space {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<BookingRequest> getBookingRequests() {
+        return bookingRequests;
+    }
+
+    public void setBookingRequests(List<BookingRequest> bookingRequests) {
+        this.bookingRequests = bookingRequests;
     }
 }

@@ -10,42 +10,48 @@
 
     <div class="container" sec:authorize="hasRole('ROLE_HOST')">
         <h3>Your Open Requests</h3>
-        <div class="booking-req" th:each="bookingReq : ${bookingreqs}">
+
+        <div class="booking-req" th:each="space : ${spaces}">
             <div class="clearfix bg-info space-info-req">
-                <h4>Your Available Space</h4>
-                <img th:src="@{'/files/' + ${bookingReq.space.imagePath}}" class="space-img-req pull-left" alt=""/>
+                <h4>Your Space</h4>
+                <img th:src="@{'/files/' + ${space.imagePath}}" class="space-img-req pull-left" alt=""/>
                 <div>
-                    <span th:text="${bookingReq.space.animalNumber}"></span>
+                    <span th:text="${space.animalNumber}"></span>
                     <span> </span>
-                    <span th:text="${bookingReq.space.animalType}"></span>
-                    <p th:text="${bookingReq.space.notes}"> </p>
+                    <span th:text="${space.animalType}"></span>
+                    <p th:text="${space.notes}"> </p>
                 </div>
 
             </div>
-            <div>
-                <span>From: </span>
-                <span th:text="${bookingReq.guest.firstName}"></span>
+            <div class="host-booking-req" th:each="bookingReq : ${space.bookingRequests}">
+                <div>
+                    <span>From: </span>
+                    <span th:text="${bookingReq.guest.firstName}"></span>
+                </div>
+
+                <div>
+                    <span>Request: </span>
+                    <span th:text="${bookingReq.numAnimals}"></span>
+                    <span> </span>
+                    <span th:text="${bookingReq.space.animalType}"></span>
+                </div>
+
+                <div class="request-options">
+                    <form class="form-format" th:action="@{'/acceptRequest/' + ${bookingReq.id}}" method="post">
+                        <input type="submit" class="btn btn-default btn-sm" value="Accept Request"/>
+                    </form>
+                    <form class="form-format" th:action="@{'/acceptReqCloseSpace/' + ${bookingReq.id}}" method="post">
+                        <input type="submit"  class="btn btn-default btn-sm" value="Accept Request and Deactivate Space"/>
+                    </form>
+                    <form class="form -format" th:action="@{'/denyRequest/' + ${bookingReq.id}}" method="post">
+                        <input type="submit" class="btn btn default btn-sm" value="Deny Request"/>
+                    </form>
+
+                </div>
+                <hr/>
+
             </div>
 
-            <div>
-                <span>Request: </span>
-                <span th:text="${bookingReq.numAnimals}"></span>
-                <span> </span>
-                <span th:text="${bookingReq.space.animalType}"></span>
-            </div>
-
-           <div class="request-options">
-               <form class="form-format" th:action="@{'/acceptRequest/' + ${bookingReq.id}}" method="post">
-                   <input type="submit" class="btn btn-default btn-sm" value="Accept Request"/>
-               </form>
-               <form class="form-format" th:action="@{'/acceptReqCloseSpace/' + ${bookingReq.id}}" method="post">
-                   <input type="submit"  class="btn btn-default btn-sm" value="Accept Request and Deactivate Space"/>
-               </form>
-               <form class="form -format" th:action="@{'/denyRequest/' + ${bookingReq.id}}" method="post">
-                   <input type="submit" class="btn btn default btn-sm" value="Deny Request"/>
-               </form>
-
-           </div>
 
         </div>
     </div>
