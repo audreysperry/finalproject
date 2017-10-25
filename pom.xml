@@ -73,8 +73,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
-			<artifactId>twilio-java-sdk</artifactId>
-			<version>3.4.5</version>
+			<artifactId>twilio</artifactId>
+			<version>7.15.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>

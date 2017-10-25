@@ -1,10 +1,10 @@
 package com.audreysperry.finalproject.controllers;
 
 
+import com.audreysperry.finalproject.SMSHelper;
 import com.audreysperry.finalproject.models.*;
 import com.audreysperry.finalproject.models.Thread;
 import com.audreysperry.finalproject.repositories.*;
-import org.apache.catalina.Host;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +17,9 @@ import java.util.List;
 
 @Controller
 public class BookSpaceController {
+
+
+
 
     @Autowired
     private SpaceRepository spaceRepo;
@@ -87,46 +90,67 @@ public class BookSpaceController {
         return "bookspace/confirmScreen";
     }
 
-    @RequestMapping(value="/requests", method = RequestMethod.GET)
-    public String displayRequests(Model model,
+    @RequestMapping(value="/hostRequests", method = RequestMethod.GET)
+    public String displayHostRequests(Model model,
                                   Principal principal) {
         // Requests if logged in user is host.
         User host = userRepo.findByUsername(principal.getName());
+
+
+
         HostLocation hostLocation = locationRepo.findByUser(host);
-        List<Space> spaces = hostLocation.getSpaces();
-        List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
-        List<BookingRequest> openRequests = new ArrayList<BookingRequest>(){};
-        for (BookingRequest bookingreq : tempRequests
-             ) {
-            if (bookingreq.isHostResponse() == null && bookingreq.getHost() == host) {
-                openRequests.add(bookingreq);
+            List<Space> spaces = hostLocation.getSpaces();
+            List<BookingRequest> tempRequests = bookingRequestRepo.findAllByHost(host);
+            List<BookingRequest> openRequests = new ArrayList<BookingRequest>() {
+            };
+            for (BookingRequest bookingreq : tempRequests
+                    ) {
+                if (bookingreq.isHostResponse() == null && bookingreq.getHost() == host) {
+                    openRequests.add(bookingreq);
+                }
+
             }
 
-        }
+        model.addAttribute("spaces", spaces);
+        model.addAttribute("bookingreqs", openRequests);
+        return "bookspace/hostRequests";
+    }
 
-        // Requests if logged in user is guest.
+    @RequestMapping(value="guestRequests", method = RequestMethod.GET)
+    public String displayGuestRequests(Model model,
+                                       Principal principal) {
+
         User guest = userRepo.findByUsername(principal.getName());
+
         List<BookingRequest> tempGuestRequests = bookingRequestRepo.findAllByGuest(guest);
-        List<BookingRequest> pendingRequests = new ArrayList<BookingRequest>() {};
-        List<BookingRequest> acceptedRequests = new ArrayList<BookingRequest>() {};
-        List<BookingRequest> deniedRequests = new ArrayList<BookingRequest>() {};
-        for(BookingRequest bookReq : tempGuestRequests
-                ) {
-            if (bookReq.isHostResponse() == null && bookReq.getGuest() == guest) {
-                pendingRequests.add(bookReq);
-            } else if (bookReq.isHostResponse() == true && bookReq.getGuest() == guest) {
-                acceptedRequests.add(bookReq);
-            } else if (bookReq.isHostResponse() == false && bookReq.getGuest() == guest) {
-                deniedRequests.add(bookReq);
+
+        List<BookingRequest> pendingRequests = new ArrayList<BookingRequest>() {
+        };
+        List<BookingRequest> acceptedRequests = new ArrayList<BookingRequest>() {
+        };
+        List<BookingRequest> deniedRequests = new ArrayList<BookingRequest>() {
+        };
+
+
+            for (BookingRequest bookReq : tempGuestRequests
+                    ) {
+                if (bookReq.isHostResponse() == null && bookReq.getGuest() == guest) {
+                    pendingRequests.add(bookReq);
+                } else if (bookReq.isHostResponse() == true && bookReq.getGuest() == guest) {
+                    acceptedRequests.add(bookReq);
+                } else if (bookReq.isHostResponse() == false && bookReq.getGuest() == guest) {
+                    deniedRequests.add(bookReq);
+                }
             }
-        }
+
         model.addAttribute("deniedReqs", deniedRequests);
         model.addAttribute("acceptedReqs", acceptedRequests);
         model.addAttribute("pendingReqs", pendingRequests);
-        model.addAttribute("spaces", spaces);
-        model.addAttribute("bookingreqs", openRequests);
-        return "bookspace/requests";
-    }
+
+        return "bookspace/guestRequests";
+        }
+
+
 
     @RequestMapping(value="/acceptRequest/{reqid}", method = RequestMethod.POST)
     public String acceptRequest(Model model,
@@ -141,6 +165,11 @@ public class BookSpaceController {
         int newAvailability = spaceNumber - reqNumber;
         if (newAvailability <= 0) {
             space.setActive(false);
+            List<BookingRequest> openRequests = bookingRepo.findAllBySpace(space);
+            for (BookingRequest openReq : openRequests
+                    ) { openReq.setHostResponse(false);
+                bookingRepo.save(openReq);
+            }
         }
         space.setAnimalNumber(newAvailability);
 
@@ -155,7 +184,7 @@ public class BookSpaceController {
             }
         }
 
-        // create new thread and send guest message of approval
+        // find thread and send guest message of approval
         Thread thread = request.getThread();
         Message message = new Message();
         String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " accepted your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ". The address is " + space.getHostLocation().getStreetAddress() + " " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getState() + " " + space.getHostLocation().getZipCode();
@@ -168,10 +197,15 @@ public class BookSpaceController {
         message.setSender(host);
         messageRepo.save(message);
 
+        if (request.getGuestPhone() != null) {
+            String guestNumber = "+1" + request.getGuestPhone();
+            SMSHelper.sendMessage(guestNumber, noteForGuest);
+        }
+
         spaceRepo.save(space);
         bookingRequestRepo.save(request);
         model.addAttribute("bookingreqs", openRequests);
-        return "redirect:/requests";
+        return "redirect:/hostRequests";
     }
 
     @RequestMapping(value="/denyRequest/{reqid}", method = RequestMethod.POST)
@@ -186,22 +220,18 @@ public class BookSpaceController {
         request.setHostResponse(false);
         Thread thread = request.getThread();
 
-//        // Send guest message of denial
-//        Message message = new Message();
-//        String noteForGuest = host.getFirstName() + " " + host.getLastName() +  " was unable to accept your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".";
-//        message.setNote(noteForGuest);
-//        message.setThread(thread);
-//        message.setAuthorUsername(host.getUsername());
-//        message.setRecipient(guest.getUsername());
-//        message.setDate(new Date());
-//        message.setReceiver(guest);
-//        message.setSender(host);
-//        messageRepo.save(message);
+
 
         spaceRepo.save(space);
         bookingRequestRepo.save(request);
 
-        return "redirect:/requests";
+        if (request.getGuestPhone() != null) {
+            String noteForGuest = "Sorry. " + request.getHost().getFirstName() + " in " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getCity() + " was unable to accept your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".";
+            String guestNumber = "+1" + request.getGuestPhone();
+            SMSHelper.sendMessage(guestNumber, noteForGuest);
+        }
+
+        return "redirect:/hostRequests";
 
     }
 
@@ -239,7 +269,12 @@ public class BookSpaceController {
         message.setSender(host);
         messageRepo.save(message);
 
-        return "redirect:/requests";
+        if (request.getGuestPhone() != null) {
+            String guestNumber = "+1" + request.getGuestPhone();
+            SMSHelper.sendMessage(guestNumber, noteForGuest);
+        }
+
+        return "redirect:/hostRequests";
     }
 
     @RequestMapping(value="/cancelRequest/{reqid}", method = RequestMethod.POST)
@@ -250,7 +285,7 @@ public class BookSpaceController {
         request.setHostResponse(false);
         bookingRequestRepo.save(request);
 
-        return "redirect:/requests";
+        return "redirect:/guestRequests";
     }
 
     @RequestMapping(value="/cancelReservation/{reqid}", method = RequestMethod.POST)
@@ -278,6 +313,6 @@ public class BookSpaceController {
         message.setAuthorUsername(guest.getFirstName());
         messageRepo.save(message);
 
-        return "redirect:/requests";
+        return "redirect:/guestRequests";
     }
 }

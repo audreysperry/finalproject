@@ -19,12 +19,11 @@
                 <li sec:authorize="hasRole('ROLE_HOST')" role="presentation"><a href="/editHost">Edit Hosting Information</a></li>
                 <li sec:authorize="hasRole('ROLE_GENERAL')" role="presentation"><a href="/host">Become an Animal Host</a></li>
             </ul>
-            <p class="navbar-text navbar-right"><span><a class="navbar-link login" href="/requests">Requests</a><a class="navbar-link login" href="/messages">Messages</a></span> <a class="btn btn-default action-button" role="button" href="/logout">Logout</a></p>
+            <p class="navbar-text navbar-right"><span><a sec:authorize="hasRole('ROLE_HOST')" class="navbar-link login" href="/hostRequests">Requests</a><a sec:authorize="hasRole('ROLE_GENERAL')" class="navbar-link login" href="/guestRequests">Requests</a><a class="navbar-link login" href="/messages">Messages</a></span> <a class="btn btn-default action-button" role="button" href="/logout">Logout</a></p>
         </div>
     </div>
     <div class="container" th:unless="${#authorization.expression('isAuthenticated()')}">
         <div class="navbar-header"><a class="navbar-brand navbar-link" href="/">Rescue Fido</a>
-            <!--<button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>-->
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav">

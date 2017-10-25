@@ -32,6 +32,9 @@ public class BookingRequest {
 
     private String notes;
 
+    @Column(name="guest_phone")
+    private String guestPhone;
+
     @OneToOne
     @JoinColumn(name="thread_id")
     private Thread thread;
@@ -98,5 +101,14 @@ public class BookingRequest {
 
     public void setThread(Thread thread) {
         this.thread = thread;
+    }
+
+
+    public String getGuestPhone() {
+        return guestPhone;
+    }
+
+    public void setGuestPhone(String guestPhone) {
+        this.guestPhone = guestPhone;
     }
 }

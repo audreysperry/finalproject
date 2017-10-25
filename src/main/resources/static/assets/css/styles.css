@@ -601,3 +601,24 @@
 .host-booking-req {
 
 }
+
+.guest-request {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: space-around;
+
+}
+
+.request-listing {
+    max-width: 800px;
+    align-self: center;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+}
+
+.request-notes {
+    max-width: 300px;
+}
