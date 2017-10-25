@@ -14,16 +14,32 @@
             <p sec:authorize="hasRole('ROLE_HOST')" class="search-desc">Communication between you and those looking for a safe space for their pets and animals</p>
             <p sec:authorize="hasRole('ROLE_GENERAL')" class="search-desc">Communication between you and potential hosts for your pets or animals.</p>
         </div>
-        <div class="thread" th:each="thread : ${threads}">
-            <a class="thread-link" th:href="@{'/thread/' + ${thread.id}}">
-                <span sec:authorize="hasRole('ROLE_HOST')" th:text="${thread.guest.firstName}"></span>
-                <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
+        <div  th:each="thread : ${threads}">
+            <div th:if="${thread.getUnreadMessages(#authentication.getPrincipal()) > 0}" class="unread thread">
+                <a class="thread-link" th:href="@{'/thread/' + ${thread.id}}">
+                    <span sec:authorize="hasRole('ROLE_HOST')" th:text="${thread.guest.firstName}"></span>
+                    <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
 
-            <div>
-                <span>Unread messages: </span>
-                <span th:text="${thread.getUnreadMessages(#authentication.getPrincipal())}"></span>
+                    <div>
+                        <span>Unread messages: </span>
+                        <span th:text="${thread.getUnreadMessages(#authentication.getPrincipal())}"></span>
+                    </div>
+                </a>
             </div>
-            </a>
+
+            <div th:if="${thread.getUnreadMessages(#authentication.getPrincipal()) == 0}" class="read thread">
+                <a class="thread-link" th:href="@{'/thread/' + ${thread.id}}">
+                    <span sec:authorize="hasRole('ROLE_HOST')" th:text="${thread.guest.firstName}"></span>
+                    <span sec:authorize="hasRole('ROLE_GENERAL')" th:text="${thread.host.firstName}"></span>
+
+                    <div>
+                        <span>Unread messages: </span>
+                        <span th:text="${thread.getUnreadMessages(#authentication.getPrincipal())}"></span>
+                    </div>
+                </a>
+
+            </div>
+
         </div>
     </div>
     </div>

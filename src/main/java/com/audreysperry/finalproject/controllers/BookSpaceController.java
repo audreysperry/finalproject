@@ -295,7 +295,8 @@ public class BookSpaceController {
                                     @RequestParam("message") String note) {
         User guest = userRepo.findByUsername(principal.getName());
         BookingRequest bookingReq = bookingRequestRepo.findOne(reqid);
-
+        bookingReq.setHostResponse(false);
+        bookingRequestRepo.save(bookingReq); 
         Space space = bookingReq.getSpace();
         int numAnimalReq = bookingReq.getNumAnimals();
         int numAnimalSpace = space.getAnimalNumber();
@@ -303,7 +304,7 @@ public class BookSpaceController {
         space.setAnimalNumber(newSpaceAvail);
         spaceRepo.save(space);
         User host = bookingReq.getHost();
-        Thread thread = threadRepo.findByBookingRequest(bookingReq);
+        Thread thread = bookingReq.getThread();
         Message message = new Message();
         message.setNote(note);
         message.setThread(thread);

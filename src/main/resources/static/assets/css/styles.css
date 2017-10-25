@@ -296,6 +296,10 @@
 
 }
 
+.animalItem:hover {
+    background-color: #eeeeee;
+}
+
 .animalItem h4 {
     color: #21a9af;
     font-size: 15px;
@@ -308,6 +312,11 @@
 
 .searchImg {
   width: 100px;
+    padding: 2px;
+}
+
+.searchImg:hover {
+    padding: 0px;
 }
 
 .search {
@@ -476,7 +485,9 @@
 .animal-search-icon {
     max-height: 25%;
     max-width: 25%;
+    padding: 2px;
 }
+
 
 .animal-search-container {
     padding: 20px 200px;
@@ -604,9 +615,10 @@
 
 .guest-request {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex-direction: column;
-    align-content: space-around;
+    justify-content: space-between;
+
 
 }
 
@@ -621,4 +633,8 @@
 
 .request-notes {
     max-width: 300px;
+}
+
+.unread {
+    background-color: #dddddd;
 }
