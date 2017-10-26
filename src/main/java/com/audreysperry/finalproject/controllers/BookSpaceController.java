@@ -226,7 +226,7 @@ public class BookSpaceController {
         bookingRequestRepo.save(request);
 
         if (request.getGuestPhone() != null) {
-            String noteForGuest = "Sorry. " + request.getHost().getFirstName() + " in " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getCity() + " was unable to accept your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".";
+            String noteForGuest = "Sorry. " + request.getHost().getFirstName() + " in " + space.getHostLocation().getCity() + ", " + space.getHostLocation().getState() + " was unable to accept your booking request for " + request.getNumAnimals() + " " + space.getAnimalType() + ".";
             String guestNumber = "+1" + request.getGuestPhone();
             SMSHelper.sendMessage(guestNumber, noteForGuest);
         }
@@ -296,7 +296,7 @@ public class BookSpaceController {
         User guest = userRepo.findByUsername(principal.getName());
         BookingRequest bookingReq = bookingRequestRepo.findOne(reqid);
         bookingReq.setHostResponse(false);
-        bookingRequestRepo.save(bookingReq); 
+        bookingRequestRepo.save(bookingReq);
         Space space = bookingReq.getSpace();
         int numAnimalReq = bookingReq.getNumAnimals();
         int numAnimalSpace = space.getAnimalNumber();

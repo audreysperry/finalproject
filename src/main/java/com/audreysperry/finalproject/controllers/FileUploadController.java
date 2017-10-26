@@ -63,7 +63,6 @@ public class FileUploadController {
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    @RequestParam("spaceid") long spaceid,
                                    RedirectAttributes redirectAttributes) {
-        System.out.println(file.getOriginalFilename());
         Space space = spaceRepo.findOne(spaceid);
         String fileName = file.getOriginalFilename();
         space.setImagePath(fileName);
@@ -74,7 +73,7 @@ public class FileUploadController {
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/";
+        return "redirect:/editHost";
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

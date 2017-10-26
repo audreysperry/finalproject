@@ -18,6 +18,14 @@
             <ul class="nav navbar-nav">
                 <li sec:authorize="hasRole('ROLE_HOST')" role="presentation"><a href="/editHost">Edit Hosting Information</a></li>
                 <li sec:authorize="hasRole('ROLE_GENERAL')" role="presentation"><a href="/host">Become an Animal Host</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Search by <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/locationSearch">City &amp; State</a></li>
+                        <li><a href="/animalSearch">Type of Animal</a></li>
+                        <li><a href="/shelterSearch">Type of Shelter</a></li>
+                    </ul>
+                </li>
             </ul>
             <p class="navbar-text navbar-right"><span><a sec:authorize="hasRole('ROLE_HOST')" class="navbar-link login" href="/hostRequests">Requests</a><a sec:authorize="hasRole('ROLE_GENERAL')" class="navbar-link login" href="/guestRequests">Requests</a><a class="navbar-link login" href="/messages">Messages</a></span> <a class="btn btn-default action-button" role="button" href="/logout">Logout</a></p>
         </div>
@@ -28,7 +36,14 @@
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav">
                 <li role="presentation"><a href="/host">Become an Animal Host</a></li>
-
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Search by <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/locationSearch">City &amp; State</a></li>
+                        <li><a href="/animalSearch">Type of Animal</a></li>
+                        <li><a href="/shelterSearch">Type of Shelter</a></li>
+                    </ul>
+                </li>
             </ul>
             <p class="navbar-text navbar-right"><a class="navbar-link login" data-toggle="modal" href="#" data-target="#login">Log In</a> <a class="btn btn-default action-button" role="button" data-toggle="modal" href="#" data-target="#signup">Sign Up</a></p>
         </div>
@@ -104,6 +119,11 @@
 
 
 </nav>
+
+<div class="footer" th:fragment="footer">
+    <p class="footer-text">A project by Audrey Sperry</p>
+    <p class="footer-text"><a class="footer-link" href="https://github.com/audreysperry/finalproject" target="_blank">Source</a></p>
+</div>
 <span th:fragment="js">
     <script type="application/javascript"
             th:src="@{'/webjars/jquery/2.1.1/jquery.js'}"></script>

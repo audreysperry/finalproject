@@ -19,7 +19,11 @@
                     <div class="col-lg-5 col-lg-offset-1 col-md-6 col-md-offset-0">
                         <h1>Keep your pets and animals safe during an emergency with Rescue Fido.</h1>
                         <p>Find a safe space for your pets and animals during times of crisis. </p>
-                        <button class="btn btn-default btn-lg action-button" type="button">Learn More</button>
+                        <a href="#section1">
+                            <button class="btn btn-default btn-lg action-button" type="button">Search</button>
+                        </a>
+
+
                     </div>
                     <div class="col-lg-5 col-lg-offset-0 col-md-5 col-md-offset-1 hidden-xs hidden-sm phone-holder">
                         <div class="iphone-mockup"><img src="/assets/img/iphone.svg" class="device" />
@@ -29,30 +33,30 @@
                 </div>
             </div>
         </div>
-        <section id="section1" class="search">
+        <section id="section1" >
             <div class="container">
-                <h1 class="search-heading">Search</h1>
-                <div class="row">
+                <h1 class="search-heading">3 Ways to Search</h1>
+                <div class="row search">
                     <div class="col-sm-4 text-center">
                         <div class="row">
 
-                            <div class="col-sm-10 col-sm-offset-2 text-center"><a class="search-link" href="/locationSearch"><img class="searchImg" src="/assets/img/location.png" alt=""/><h3>Location</h3></a><p>Enter your desired city and state and find options nearby.</p></div>
+                            <div class="col-sm-10 col-sm-offset-2 text-center"><a class="search-link" href="/locationSearch"><img class="searchImg" src="/assets/img/location.png" alt=""/><h3>City &amp; State</h3></a><p class="search-details">Enter your desired city and state and find options nearby.</p></div>
                         </div>
                     </div>
                     <div class="col-sm-4 text-center">
                         <div class="row">
 
-                            <div class="col-sm-10 col-sm-offset-1 text-center"><a class="search-link" href="/animalSearch"><img class="searchImg" src="/assets/img/pet.png" alt=""/><h3>Type of Animal</h3></a><p>Search by type of animal you need shelter for.</p></div>
+                            <div class="col-sm-10 col-sm-offset-1 text-center"><a class="search-link" href="/animalSearch"><img class="searchImg" src="/assets/img/pet.png" alt=""/><h3>Type of Animal</h3></a><p class="search-details">Search by type of animal you are seeking shelter for.</p></div>
                         </div>
                     </div>
                     <div class="col-sm-4 text-center">
                         <div class="row">
                             <div class="col-sm-10 text-center"><a class="search-link" href="/shelterSearch"><img class="searchImg" src="/assets/img/shelter.png" alt=""/>
-                                <h3>Type of Shelter</h3></a><p>Search for farms, homes or animal shelters</p></div>
+                                <h3>Type of Shelter</h3></a><p class="search-details">Find farms, homes, and animal shelters with space available.</p></div>
                         </div>
                     </div>
                 </div>
-            </div><!--/container-->
+            </div>
 
         </section>
 
@@ -60,9 +64,9 @@
 
     </div>
 
+    <div th:replace="fragments/template :: footer"></div>
 
 </div>
-
 
 <span th:replace="fragments/template :: js"></span>
 </body>

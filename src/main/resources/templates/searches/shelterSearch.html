@@ -7,24 +7,28 @@
 <body>
 <div class="wrapper">
     <div th:replace="fragments/template :: nav"></div>
+    <div class="container text-center">
+        <h1 class="shelter-heading">What type of space are you looking for? </h1>
 
+    </div>
         <div class="shelter-search-options">
 
             <a class="shelter-search-link" href="/search/Farm"><div class="shelter-search-icon">
                 <img class="shelter-icon" src="/assets/img/farmimg.png" alt="alternate"/>
-                <h2 class="shelter-search-term">Farms</h2>
+                <h2 class="shelter-search-term">Farm</h2>
             </div></a>
             <a class="shelter-search-link" href="/search/Home"><div class="shelter-search-icon">
                 <img class="shelter-icon" src="/assets/img/shelter.png" alt="alternate"/>
-                <h2 class="shelter-search-term">Homes</h2>
+                <h2 class="shelter-search-term">Home</h2>
             </div></a>
             <a class="shelter-search-link" href="/search/Shelter"><div class="shelter-search-icon">
                 <img class="shelter-icon" src="assets/img/pet.png" alt="alternate"/>
-                <h2 class="shelter-search-term">Animal Shelters</h2>
+                <h2 class="shelter-search-term">Animal Shelter</h2>
             </div></a>
         </div>
 
 
+    <div th:replace="fragments/template :: footer"></div>
 
 
 </div>

@@ -1,5 +1,20 @@
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    margin: 0;
+    padding-bottom: 6rem;
+
+}
+
+
 .wrapper {
   font-family:'Source Sans Pro', sans-serif;
+
+    padding-bottom: 65px;
 }
 
 
@@ -277,6 +292,7 @@
 
 .navbar .navbar-brand {
     color: black;
+    line-height: 25px;
 }
 
 .wrap {
@@ -298,6 +314,7 @@
 
 .animalItem:hover {
     background-color: #eeeeee;
+
 }
 
 .animalItem h4 {
@@ -315,19 +332,32 @@
     padding: 2px;
 }
 
+.search-details {
+    font-size: 16px;
+}
+
 .searchImg:hover {
     padding: 0px;
 }
 
 .search {
-  margin-top: 100px;
-  margin-bottom: 100px;
+  padding: 100px 100px 200px 100px;
 }
 
 .search-heading {
-  margin-bottom: 30px;
-  font-size: 20px;
+  margin-top: 150px;
+  font-size: 30px;
+    text-align: center;
+    font-stretch: expanded;
+    text-transform: uppercase;
+    color: #21a9af;
 
+}
+
+.shelter-heading {
+    margin-top: 50px;
+    font-size: 30px;
+    color: #504F51;
 }
 
 .navbar {
@@ -353,6 +383,7 @@
 
 .navbar.navbar-default .navbar-nav > li > a{
   color:#d9d9d9;
+    line-height: 27px;
 }
 
 .action-button:hover{
@@ -375,6 +406,32 @@
   outline:none;
 }
 
+
+.navbar.navbar-default .navbar-nav > li > a:focus, .navbar.navbar-default .navbar-nav > li > a:hover {
+    color: #fcfeff !important;
+    background-color: transparent;
+}
+
+
+.navbar .navbar-collapse p .login:hover {
+    color: #fff;
+}
+
+.action-button, .action-button:active {
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 20px;
+    color: #ebeff1;
+    box-shadow: none;
+    text-shadow: none;
+    padding: 6px 15px;
+    background: transparent;
+    transition: background-color 0.25s;
+    outline: none;
+}
+
+.action-button:hover {
+    color: #fff;
+}
 .form-design {
   position: absolute;
   left: 0;
@@ -529,6 +586,11 @@
 
 .shelter-icon {
     max-width: 150px;
+    padding: 2px;
+}
+
+.shelter-icon:hover {
+    padding: 0px;
 }
 
 .thread {
@@ -552,7 +614,7 @@
 }
 
 .loggedin {
-    background-color: #184e8e;
+    background-color: #172a74;
     max-width: 350px;
     margin-left: 100px;
     /*margin-left: 325px;*/
@@ -637,4 +699,43 @@
 
 .unread {
     background-color: #dddddd;
+}
+
+.space-container {
+    display: flex;
+}
+
+.space-update-forms {
+    display: flex;
+
+}
+
+.footer {
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #172a74;
+    height: 65px;
+    overflow: hidden;
+    align-items: center;
+    display: flex;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    margin-top: 75px;
+}
+
+.footer-text {
+    margin: 10px;
+    color: #ffffff;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.footer-link:hover {
+    color: #21a9af;
+    text-decoration: none;
 }
