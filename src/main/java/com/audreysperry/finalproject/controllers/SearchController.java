@@ -38,16 +38,7 @@ public class SearchController {
     public String locationSearchPage(Model model) {
 
         List<HostLocation> hostLocations = locationRepo.findAll();
-//        for (HostLocation location : hostLocations
-//             ) {
-//            List<Space> locationSpaces = location.getSpaces();
-//            for (Space space : locationSpaces
-//                 ) {
-//                if (space.isActive() == false)
-//
-//            }
 
-//        }
         model.addAttribute("user", new User());
         model.addAttribute("locations", hostLocations);
         return "/searches/locationSearch";

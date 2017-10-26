@@ -40,6 +40,11 @@
                 <label for="notes">Comments to Host (optional)</label>
                 <input class="form-control" type="text" th:field="*{notes}"/>
             </div>
+            <div class="form-group">
+                <label for="guestPhone">Cell Phone Number. We will text you when the host responds to your request.</label>
+                <p>Please no spaces, dashes or dots.</p>
+                <input type="tel" th:field="*{guestPhone}" />
+            </div>
             <input type="submit" class="btn btn-secondary" value="Request to Stay"/>
         </form>
     </div>

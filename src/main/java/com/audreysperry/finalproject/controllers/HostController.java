@@ -5,6 +5,7 @@ import com.audreysperry.finalproject.googleApi.GeoCodingInterface;
 import com.audreysperry.finalproject.googleApi.GeoCodingResponse;
 import com.audreysperry.finalproject.models.*;
 import com.audreysperry.finalproject.repositories.*;
+import com.audreysperry.finalproject.storage.StorageService;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.security.Principal;
 import java.util.List;
 
 @Controller
 public class HostController {
+
+    @Autowired
+    private StorageService storageService;
+
 
     @Autowired
     private UserRepository userRepo;
@@ -32,12 +39,7 @@ public class HostController {
 
     @Autowired
     private RoleRepository roleRepo;
-
-    @Autowired
-    private MessageRepository messageRepo;
-
-    @Autowired
-    private ThreadRepository threadRepo;
+    
 
     @Autowired
     private BookingRequestRepository bookingRepo;
@@ -93,9 +95,13 @@ public class HostController {
 
     @RequestMapping(value="/addSpace", method = RequestMethod.POST)
     public String addSpace(@ModelAttribute Space space,
-                           @RequestParam("location_id") long location_id) {
+                           @RequestParam("location_id") long location_id,
+                           @RequestParam("file")MultipartFile file) {
         HostLocation currentHostLocation = locationRepo.findById(location_id);
         space.setHostLocation(currentHostLocation);
+        storageService.store(file);
+        String fileName = file.getOriginalFilename();
+        space.setImagePath(fileName);
         space.setActive(true);
         spaceRepo.save(space);
         return "redirect:/editHost";

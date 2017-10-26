@@ -2,6 +2,7 @@ package com.audreysperry.finalproject.models;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,6 +36,22 @@ public class HostLocation {
 
     @OneToMany(mappedBy = "hostLocation", cascade = CascadeType.ALL)
     private List<Space> spaces;
+
+
+    public List<Space> getActiveSpaces() {
+         List<Space> activeSpaces = new ArrayList<Space>();
+
+        for (Space space : spaces
+             ) {
+            if (space.isActive() == true) {
+                activeSpaces.add(space);
+            }
+
+        }
+        return activeSpaces;
+    }
+
+
 
 
     public long getId() {
