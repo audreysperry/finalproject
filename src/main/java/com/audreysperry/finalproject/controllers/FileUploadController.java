@@ -67,7 +67,9 @@ public class FileUploadController {
         String fileName = file.getOriginalFilename();
         space.setImagePath(fileName);
         spaceRepo.save(space);
-        storageService.store(file);
+       // storageService.store(file);
+
+
 
 
         redirectAttributes.addFlashAttribute("message",

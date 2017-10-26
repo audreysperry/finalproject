@@ -1,5 +1,16 @@
 package com.audreysperry.finalproject.storage;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -8,7 +19,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,6 +31,8 @@ import java.util.stream.Stream;
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
+    private final String AWS_ACCESS_KEY_ID = System.getenv("AWS_ACCESS_KEY_ID");
+    private final String AWS_SECRET_ACCESS_KEY = System.getenv("AWS_SECRET_ACCESS_KEY");
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
@@ -39,11 +52,31 @@ public class FileSystemStorageService implements StorageService {
                         "Cannot store file with relative path outside current directory "
                                 + filename);
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
-                    StandardCopyOption.REPLACE_EXISTING);
+
+            // Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
+            // StandardCopyOption.REPLACE_EXISTING);
+
+            BasicAWSCredentials awsCreds = new BasicAWSCredentials(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                    .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                    .withRegion("us-east-2")
+                    .build();
+
+            String bucketName = "staybleimageupload";
+
+
+            ObjectMetadata meta = new ObjectMetadata();
+            meta.setContentLength(file.getSize());
+
+            PutObjectRequest request = new PutObjectRequest(bucketName, filename, file.getInputStream(), meta)
+                                            .withCannedAcl(CannedAccessControlList.PublicRead);
+
+            s3Client.putObject(request);
         }
         catch (IOException e) {
             throw new StorageException("Failed to store file " + filename, e);
+
+
         }
     }
 
