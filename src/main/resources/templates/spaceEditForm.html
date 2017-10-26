@@ -9,7 +9,8 @@
     <div th:replace="fragments/template :: nav"></div>
 
     <form th:action="@{'/space/' + ${space.id} + '/edit'}" method="post" th:object="${space}" class="form-format container form-design col-lg-6">
-            <h3>Edit Your Space Listing</h3>
+        <img class="img-search-sm" src="/assets/img/edit.png" alt=""/>
+        <h3>Edit Your Space Listing</h3>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
              <input name="location_id" type="hidden" th:value="${location}" />
             <input type="hidden" th:field="*{imagePath}" />

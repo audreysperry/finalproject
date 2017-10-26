@@ -3,7 +3,7 @@
 <head th:fragment="head">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Rescue Fido</title>
+    <title>Stayble</title>
     <link rel="stylesheet" th:href="@{'/webjars/bootstrap/3.3.7-1/css/bootstrap.css'}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" />
     <link rel="stylesheet" href="/assets/css/styles.css" />
@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-default navigation-clean-search" th:fragment="nav">
     <div class="container" th:if="${#authorization.expression('isAuthenticated()')}">
-        <div class="navbar-header"><a class="navbar-brand navbar-link" href="/">Rescue Fido</a>
+        <div class="navbar-header"><a class="navbar-brand navbar-link" href="/">Stayble</a>
             <!--<button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>-->
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
@@ -27,11 +27,11 @@
                     </ul>
                 </li>
             </ul>
-            <p class="navbar-text navbar-right"><span><a sec:authorize="hasRole('ROLE_HOST')" class="navbar-link login" href="/hostRequests">Requests</a><a sec:authorize="hasRole('ROLE_GENERAL')" class="navbar-link login" href="/guestRequests">Requests</a><a class="navbar-link login" href="/messages">Messages</a></span> <a class="btn btn-default action-button" role="button" href="/logout">Logout</a></p>
+            <p class="navbar-text navbar-right"><span><a sec:authorize="hasRole('ROLE_HOST')" class="navbar-link login" href="/hostRequests">Requests</a><a sec:authorize="hasRole('ROLE_GENERAL')" class="navbar-link login" href="/guestRequests">Requests</a><a class="navbar-link login" href="/messages">Messages</a><a href="#" class="navbar-link login"></a></span> <a class="btn btn-default action-button" role="button" href="/logout">Logout</a></p>
         </div>
     </div>
     <div class="container" th:unless="${#authorization.expression('isAuthenticated()')}">
-        <div class="navbar-header"><a class="navbar-brand navbar-link" href="/">Rescue Fido</a>
+        <div class="navbar-header"><a class="navbar-brand navbar-link" href="/">Stayble</a>
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav">
@@ -106,7 +106,7 @@
                                 <label for="password">Password</label>
                                 <input class="form-control" type="password" th:field="*{password}" />
                             </div>
-                            <button type="submit" class="btn btn-secondary">Join Rescue Fido</button>
+                            <button type="submit" class="btn btn-secondary">Join Stayble</button>
                         </form>
                     </div>
                 </div>

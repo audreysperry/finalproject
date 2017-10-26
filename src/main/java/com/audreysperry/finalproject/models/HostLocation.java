@@ -28,7 +28,7 @@ public class HostLocation {
     private double longitude;
 
     @Column(name="zip_code")
-    private int zipCode;
+    private String zipCode;
 
     @OneToOne
     @JoinColumn(name="user_id")
@@ -94,11 +94,11 @@ public class HostLocation {
         this.state = state;
     }
 
-    public int getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

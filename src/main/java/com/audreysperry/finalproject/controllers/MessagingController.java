@@ -26,7 +26,8 @@ public class MessagingController {
     private ThreadRepository threadRepo;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
-    public String homePage(Model model) {
+    public String homePage(Model model,
+                           Principal principal) {
 
         model.addAttribute("user", new User());
 

@@ -8,23 +8,31 @@
 <div class="wrapper">
     <div th:replace="fragments/template :: nav"></div>
     <div class="container">
-        <h3>Edit or Deactive Your Host Information</h3>
+        <div>
+            <img class="img-search-sm" src="/assets/img/edit.png" alt=""/>
+            <h3>Edit or Deactive Your Host Information</h3>
+        </div>
+
 
     </div>
-    <div class="container">
+    <div class="container location-contain">
         <h4>Your Location</h4>
-        <span th:text="${location.streetAddress}"></span>
-        <br/>
-        <span th:text="${location.city}"></span>
-        <span>, </span>
-        <span th:text="${location.state}"></span>
-        <br/>
-        <span th:text="${location.zipCode}"></span>
-        <form th:action="@{'/location/' + ${location.id} + '/edit'}" method="get">
-            <input type="submit" class="btn btn-secondary" value="Edit" />
-        </form>
+        <div>
+            <span th:text="${location.streetAddress}"></span>
+            <br/>
+            <span th:text="${location.city}"></span>
+            <span>, </span>
+            <span th:text="${location.state}"></span>
+            <span> </span>
+            <span th:text="${location.zipCode}"></span>
+        </div>
 
+        <form th:action="@{'/location/' + ${location.id} + '/edit'}" method="get" class="edit-location-button">
+            <input type="submit" class="btn btn-default" value="Edit" />
+        </form>
+        <hr/>
     </div>
+
 
     <div class="container">
         <h4>Your Available Space</h4>
@@ -35,17 +43,19 @@
                         <img th:src="@{'/files/' + ${space.imagePath}}" class="space-img" alt=""/>
                     </div>
                     <div>
+                        <span>Availability: </span>
                         <span th:text="${space.animalNumber}"></span>
                         <span> </span>
                         <span th:text="${space.animalType}"></span>
                     </div>
-                    <p th:text="${space.notes}"></p>
+                    <span>Notes: </span>
+                    <span th:text="${space.notes}"></span>
                     <div class="space-update-forms">
-                        <form th:action="@{'/space/' + ${space.id} + '/edit'}" method="get">
-                            <input type="submit" class="btn btn-secondary" value="Edit" />
+                        <form th:action="@{'/space/' + ${space.id} + '/edit'}" method="get" class="space-update-button">
+                            <input type="submit" class="btn btn-default" value="Edit" />
                         </form>
-                        <form th:action="@{'/space/' + ${space.id} + '/deactivate'}" method="post">
-                            <input type="submit" class="btn btn-secondary" value="Deactivate Listing" />
+                        <form th:action="@{'/space/' + ${space.id} + '/deactivate'}" method="post" class="space-update-button">
+                            <input type="submit" class="btn btn-default" value="Remove Space" />
                         </form>
                     </div>
                     <div th:if="${space.imagePath == null}">
@@ -56,16 +66,15 @@
                                 <tr><td>Upload a picture of this space. Must be JPEG or PNG.</td>
                                     <br/>
                                     <td><input type="file" name="file" /></td></tr>
-                                <tr><td></td><td><input type="submit" class="btn btn-secondary" value="Upload" /></td></tr>
+                                <tr><td></td><td><input type="submit" class="btn btn-default" value="Upload" /></td></tr>
                             </table>
                         </form>
                     </div>
-
-
                 </div>
             </div>
         </div>
-        <form action="/addSpace">
+        <hr/>
+        <form action="/addSpace" class="add-space">
             <input type="submit" class="btn btn-outline-secondary" value="Add Another Space" />
         </form>
 
