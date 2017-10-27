@@ -44,7 +44,7 @@ public class SearchController {
         model.addAttribute("apiKey", System.getenv("GOOGLE_STATIC_MAP_API_KEY"));
         model.addAttribute("user", new User());
         model.addAttribute("locations", hostLocations);
-        return "/searches/locationSearch";
+        return "searches/locationSearch";
     }
 
     @RequestMapping(value="/locationSearchResults", method = RequestMethod.GET)
@@ -83,13 +83,13 @@ public class SearchController {
         }
         model.addAttribute("locations", hostLocations);
         model.addAttribute("user", new User());
-        return "/searches/locationSearch";
+        return "searches/locationSearch";
     }
 
     @RequestMapping(value="/shelterSearch", method = RequestMethod.GET)
     public String shelterSearchPage(Model model) {
         model.addAttribute("user", new User());
-        return "/searches/shelterSearch";
+        return "searches/shelterSearch";
     }
 
     @RequestMapping(value="/search/{shelterType}", method = RequestMethod.GET)
@@ -120,7 +120,7 @@ public class SearchController {
     @RequestMapping(value="/animalSearch", method = RequestMethod.GET)
     public String animalSearchPage(Model model) {
         model.addAttribute("user", new User());
-        return "/searches/animalSearch";
+        return "searches/animalSearch";
     }
 
     @RequestMapping(value="/location/{animalType}", method=RequestMethod.GET)
@@ -131,7 +131,7 @@ public class SearchController {
         model.addAttribute("spaces", spaceRepo.findAllByAnimalType(animalType));
         model.addAttribute("animalType", animalType);
         model.addAttribute("user", new User());
-        return "/searches/spaceOptions";
+        return "searches/spaceOptions";
     }
 
     @RequestMapping(value="/stateResults", method = RequestMethod.GET)
@@ -142,7 +142,7 @@ public class SearchController {
         model.addAttribute("spaces", spaces);
         model.addAttribute("animalType", animalType);
         model.addAttribute("user", new User());
-        return "/searches/spaceOptions";
+        return "searches/spaceOptions";
     }
 
 
