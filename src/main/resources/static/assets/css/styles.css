@@ -766,3 +766,9 @@ body {
     flex-direction: column;
     justify-content: flex-end;
 }
+
+.static-map {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
