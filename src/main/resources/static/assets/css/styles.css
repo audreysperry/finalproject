@@ -324,6 +324,7 @@ body {
 .space-img {
   max-width: 100px;
   max-height: 100px;
+    margin: 10px;
 }
 
 .searchImg {
@@ -756,4 +757,12 @@ body {
 
 .add-space {
     margin-top: 15px;
+}
+
+.one-space {
+    max-width: 200px;
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }

@@ -91,17 +91,38 @@
                             <img class="img-search-sm" th:if="${location.getType().equals('Home')}" src="/assets/img/shelter.png" alt=""/>
                             <img class="img-search-sm" th:if="${location.getType().equals('Shelter')}" src="/assets/img/animalshelter.png" alt=""/>
 
-                            <span th:text="${location.type}"></span><span> </span><span class="city-state" th:text="${location.city}"></span><span class="city-state">, </span><span class="city-state" th:text="${location.state}"> </span></div>
-                        <div></div>
+                            <span th:text="${location.type}"></span><span> </span>
+                        <div><span class="city-state" th:text="${location.city}"></span><span class="city-state">, </span><span class="city-state" th:text="${location.state}"> </span></div></div>
                         <div class="host-info"><span>Host: </span><span th:text="${location.user.firstName}"></span></div>
                         <a th:href="@{'/messageHost/' + ${location.user.id}}" class="btn btn-default btn-sm message-btn">Message Host</a>
+                        <div>
+                            <a href="#" class="btn-btn-default" data-target="#staticmap" data-toggle="modal">See location on map</a>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" id="staticmap" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title"></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img th:src="${location.getStaticMap()}" alt=""/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
 
                         <div class="space-div" th:each="space : ${location.spaces}">
                             <div th:if="${space.active}">
                                 <div class="space-avail col-lg-11">
                                     <div class="">
                                         <div class="space-search-img pull-left" >
-                                            <img th:src="@{'/files/' + ${space.imagePath}}" class="object-fit" alt=""/>
+                                            <img th:src="@{'https://s3.us-east-2.amazonaws.com/staybleimageupload/' + ${space.imagePath}}" class="object-fit" alt=""/>
                                         </div>
                                         <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn booking-btn pull-right">Create Booking Request</a>
 

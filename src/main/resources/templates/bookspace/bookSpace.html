@@ -8,8 +8,12 @@
 <div class="wrapper">
    <div th:replace="fragments/template :: nav"></div>
     <div class="container">
+        <h3>The Space</h3>
         <span>Host: </span>
         <span th:text="${space.hostLocation.user.firstName}"></span>
+        <br/>
+        <span>Type: </span>
+        <span th:text="${space.hostLocation.type}"></span>
         <br/>
         <span>Location: </span>
         <span th:text="${space.hostLocation.city}"></span>
@@ -20,15 +24,17 @@
         <span th:text="${space.animalNumber}"></span>
         <span> </span>
         <span th:text="${space.animalType}"></span>
-
+        <br/>
+        <span>Notes: </span>
+        <span th:text="${space.notes}"></span>
 
     </div>
-    <div th:if="${requestSent}">
-        <h2>You've already submitted a request for this space.</h2>
-        <a href="#">Try a new Search</a>
+    <div class="container" th:if="${requestSent}">
+        <h3>You've already submitted a request for this space.</h3>
+        <a class="btn btn-default" href="/locationSearch">Try a new Search</a>
     </div>
 
-    <div th:unless="${requestSent}">
+    <div class="container" th:unless="${requestSent}">
         <form th:action="@{'/requestSpace/' + ${space.id}}" class="form-format container form-design col-lg-6" method="post" th:object="${booking}">
             <h3>Make a request for you animals to stay.</h3>
             <h5>The host will approve or deny your request.</h5>

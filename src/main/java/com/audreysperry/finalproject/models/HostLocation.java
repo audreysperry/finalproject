@@ -51,8 +51,13 @@ public class HostLocation {
         return activeSpaces;
     }
 
+    @Transient
+    private String apiKey = System.getenv("GOOGLE_STATIC_MAP_API_KEY");
 
-
+    public String getStaticMap() {
+        String urlString = "https://maps.googleapis.com/maps/api/staticmap?zoom=12&size=400x400&maptype=roadmap&markers=color:green%7C" + this.latitude + "," + this.longitude + "&key=" + this.apiKey;
+        return urlString;
+    }
 
     public long getId() {
         return id;

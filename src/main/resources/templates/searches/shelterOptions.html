@@ -101,7 +101,7 @@
                                 <div class="space-avail col-lg-11">
                                     <div class="">
                                         <div class="space-search-img pull-left" >
-                                            <img th:src="@{'/files/' + ${space.imagePath}}" class="object-fit" alt=""/>
+                                            <img th:src="@{'https://s3.us-east-2.amazonaws.com/staybleimageupload/' + ${space.imagePath}}" class="object-fit" alt=""/>
                                         </div>
                                         <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn booking-btn pull-right">Create Booking Request</a>
 
