@@ -39,9 +39,9 @@ public class SearchController {
 
         List<HostLocation> hostLocations = locationRepo.findAll();
         String urlString = "https://maps.googleapis.com/maps/api/staticmap?zoom=12&size=400x400&maptype=roadmap&markers=color:green%7C";
-
+        String apiKey = System.getenv("GOOGLE_STATIC_MAP_API_KEY");
         model.addAttribute("urlString", urlString);
-        model.addAttribute("apiKey", System.getenv("GOOGLE_STATIC_MAP_API_KEY"));
+        model.addAttribute("apiKey", apiKey);
         model.addAttribute("user", new User());
         model.addAttribute("locations", hostLocations);
         return "searches/locationSearch";
