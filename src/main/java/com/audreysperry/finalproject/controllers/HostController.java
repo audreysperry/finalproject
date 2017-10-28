@@ -64,12 +64,12 @@ public class HostController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String locationString = hostLocation.getStreetAddress() + ", " + hostLocation.getCity() + ", " + hostLocation.getState() + ", " + hostLocation.getZipCode();
 
-        ApiKey apiKey = new ApiKey();
+        String apiKey = System.getenv("GOOGLE_MAPS_GEOCODING_API_KEY");
         GeoCodingInterface geoCodingInterface = Feign.builder()
                 .decoder(new GsonDecoder())
                 .target(GeoCodingInterface.class, "https://maps.googleapis.com");
 
-        GeoCodingResponse response = geoCodingInterface.geoCodingResponse(locationString, apiKey.getAPI_Key());
+        GeoCodingResponse response = geoCodingInterface.geoCodingResponse(locationString, apiKey);
 
         double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
