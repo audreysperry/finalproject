@@ -78,7 +78,7 @@ public class HostController {
         locationRepo.save(hostLocation);
         model.addAttribute("location_id", hostLocation.getId());
         model.addAttribute("space", new Space());
-        return "addSpace";
+        return "home";
 
     }
 
