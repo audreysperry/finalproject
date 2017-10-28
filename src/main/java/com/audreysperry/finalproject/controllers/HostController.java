@@ -46,6 +46,7 @@ public class HostController {
 
     @RequestMapping(value="/host", method = RequestMethod.GET)
     public String becomeHost(Model model) {
+
         model.addAttribute("hostLocation", new HostLocation());
 
         return "addLocation";
