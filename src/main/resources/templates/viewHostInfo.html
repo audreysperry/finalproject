@@ -16,6 +16,7 @@
 
     </div>
     <div class="container location-contain">
+        <span class="h4">Thank you for being a host, </span><span class="h4" th:text="${location.user.firstName}"></span><span class="h4">!</span>
         <h4>Your Location</h4>
         <div>
             <span th:text="${location.streetAddress}"></span>
@@ -50,7 +51,7 @@
                     </div>
                     <div>
                         <span>Notes: </span>
-                        <span th:text="${space.notes}"></span>
+                        <span class="notes" th:text="${space.notes}"></span>
                     </div>
                     <div class="space-update-forms">
                         <form th:action="@{'/space/' + ${space.id} + '/edit'}" method="get" class="space-update-button">

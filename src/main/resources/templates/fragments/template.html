@@ -7,6 +7,9 @@
     <link rel="stylesheet" th:href="@{'/webjars/bootstrap/3.3.7-1/css/bootstrap.css'}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" />
     <link rel="stylesheet" href="/assets/css/styles.css" />
+
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon" />
 </head>
 <body>
 <nav class="navbar navbar-default navigation-clean-search" th:fragment="nav">
@@ -27,7 +30,14 @@
                     </ul>
                 </li>
             </ul>
-            <p class="navbar-text navbar-right"><span><a sec:authorize="hasRole('ROLE_HOST')" class="navbar-link login" href="/hostRequests">Requests</a><a sec:authorize="hasRole('ROLE_GENERAL')" class="navbar-link login" href="/guestRequests">Requests</a><a class="navbar-link login" href="/messages">Messages</a><a href="#" class="navbar-link login"></a></span> <a class="btn btn-default action-button" role="button" href="/logout">Logout</a></p>
+            <p class="navbar-text navbar-right">
+
+                <span>
+                    <a sec:authorize="hasRole('ROLE_HOST')" class="navbar-link login" href="/hostRequests">Requests</a>
+                    <a sec:authorize="hasRole('ROLE_GENERAL')" class="navbar-link login" href="/guestRequests">Requests</a>
+                    <a class="navbar-link login" href="/messages">Messages</a>
+                    <a href="#" class="navbar-link login"></a></span>
+                <a class="btn btn-default action-button" role="button" href="/logout">Logout</a></p>
         </div>
     </div>
     <div class="container" th:unless="${#authorization.expression('isAuthenticated()')}">

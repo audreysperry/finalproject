@@ -28,6 +28,12 @@ public class MessagingController {
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String homePage(Model model,
                            Principal principal) {
+        if (principal != null) {
+            User loggedIn = userRepo.findByUsername(principal.getName());
+            model.addAttribute("loggedIn", loggedIn);
+
+
+        }
 
         model.addAttribute("user", new User());
 
@@ -38,9 +44,11 @@ public class MessagingController {
     public String messageHostForm(@PathVariable("user_id") long user_id,
                                   Model model,
                                   Principal principal) {
+        User loggedIn = userRepo.findByUsername(principal.getName());
         User host = userRepo.findOne(user_id);
         User guest = userRepo.findByUsername(principal.getName());
 
+        model.addAttribute("user", loggedIn);
         model.addAttribute("host", host);
         model.addAttribute("guest", guest);
         model.addAttribute("message", new Message());
