@@ -712,10 +712,14 @@ body {
 
 .space-container {
     display: flex;
+    margin: 0 auto;
+    flex-wrap: wrap;
+
 }
 
 .space-update-forms {
     display: flex;
+    flex-wrap: wrap;
 
 }
 
