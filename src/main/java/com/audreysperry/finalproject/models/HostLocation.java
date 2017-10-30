@@ -55,7 +55,7 @@ public class HostLocation {
     private String apiKey = System.getenv("GOOGLE_STATIC_MAP_API_KEY");
 
     public String getStaticMap() {
-        String urlString = "https://maps.googleapis.com/maps/api/staticmap?zoom=6&size=400x400&maptype=roadmap&markers=color:blue%7C" + this.latitude + "," + this.longitude + "&key=" + this.apiKey;
+        String urlString = "https://maps.googleapis.com/maps/api/staticmap?zoom=7&size=400x400&maptype=roadmap&markers=color:blue%7C" + this.latitude + "," + this.longitude + "&key=" + this.apiKey;
         return urlString;
     }
 

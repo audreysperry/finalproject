@@ -8,6 +8,7 @@
 <div class="wrapper">
     <div th:replace="fragments/template :: nav"></div>
     <form class="form-format container col-lg-6 form-design" action="/signup" method="post" th:object="${user}">
+        <h3>Create your Account on Stayble</h3>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div class="form-group">
             <label for="firstName">First Name</label>

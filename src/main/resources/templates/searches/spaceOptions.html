@@ -93,12 +93,33 @@
                     <div></div>
                     <div class="host-info"><span>Host: </span><span th:text="${space.hostLocation.user.firstName}"></span></div>
                     <a th:href="@{'/messageHost/' + ${space.hostLocation.user.id}}" class="btn btn-default btn-sm message-btn">Message Host</a>
+                    <div>
+                        <a href="#" class="btn btn-secondary btn-sm" th:attr="data-target='#'+${space.hostLocation.id}" data-toggle="modal">See location on map</a>
+                    </div>
 
+                    <!--Static map modal -->
+                    <div class="modal fade" tabindex="-1" th:id="${space.hostLocation.id}" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title"><span th:text="${space.hostLocation.city}"></span><span>, </span><span th:text="${space.hostLocation.state}"></span></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <img class="static-map" th:src="${space.hostLocation.getStaticMap()}" alt=""/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
                     <div class="space-avail col-lg-11">
                         <div class="">
                             <div class="space-search-img pull-left" >
                                 <img th:src="@{'https://s3.us-east-2.amazonaws.com/staybleimageupload/' + ${space.imagePath}}" class="object-fit" alt=""/>
                             </div>
+
                             <a th:href="@{'/requestSpace/' + ${space.id}}" class="btn booking-btn pull-right">Create Booking Request</a>
 
                             <h4 class="space-info">Availability </h4>

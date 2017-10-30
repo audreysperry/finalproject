@@ -1,6 +1,7 @@
 package com.audreysperry.finalproject.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -94,5 +95,18 @@ public class Space {
 
     public void setBookingRequests(List<BookingRequest> bookingRequests) {
         this.bookingRequests = bookingRequests;
+    }
+
+    public List<Long> getRequesters () {
+        List<BookingRequest> bookingrequests = this.bookingRequests;
+        List<Long> requestors = new ArrayList<>();
+        for (BookingRequest bookingrequest : bookingrequests
+             ) {
+            Long userid = bookingrequest.getGuest().getId();
+            requestors.add(userid);
+
+        }
+
+        return requestors;
     }
 }

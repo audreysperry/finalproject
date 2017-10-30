@@ -96,10 +96,11 @@
                         <div class="host-info"><span>Host: </span><span th:text="${location.user.firstName}"></span></div>
                         <a th:href="@{'/messageHost/' + ${location.user.id}}" class="btn btn-default btn-sm message-btn">Message Host</a>
                         <div>
-                            <a href="#" class="btn-btn-default" data-target="#staticmap" data-toggle="modal">See location on map</a>
+                            <a href="#" class="btn btn-secondary btn-sm" th:attr="data-target='#'+${location.id}" data-toggle="modal">See location on map</a>
                         </div>
 
-                        <div class="modal fade" tabindex="-1" id="staticmap" role="dialog">
+                        <!--Static map modal -->
+                        <div class="modal fade" tabindex="-1" th:id="${location.id}" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -115,7 +116,6 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
-
 
                         <div class="space-div" th:each="space : ${location.spaces}">
                             <div th:if="${space.active}">
@@ -149,6 +149,8 @@
             </div>
 
         </div>
+
+
 
 
         <div th:replace="fragments/template :: footer"></div>

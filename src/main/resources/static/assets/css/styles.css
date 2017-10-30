@@ -688,6 +688,7 @@ body {
     flex-wrap: nowrap;
     flex-direction: column;
     justify-content: space-between;
+    margin-right: 40px;
 
 
 }
@@ -697,7 +698,6 @@ body {
     align-self: center;
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
     margin-bottom: 100px;
 
 }
@@ -787,4 +787,9 @@ body {
 
 .icon {
     margin-bottom: 6px;
+}
+
+
+.cancel-request {
+    margin-top: 10px;
 }
