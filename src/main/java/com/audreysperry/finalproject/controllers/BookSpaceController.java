@@ -319,12 +319,13 @@ public class BookSpaceController {
         User host = bookingReq.getHost();
         Thread thread = bookingReq.getThread();
         Message message = new Message();
+        message.setDate(new Date());
         message.setNote(note);
         message.setThread(thread);
-        message.setRecipient(host.getFirstName());
+        message.setRecipient(host.getUsername());
         message.setReceiver(host);
         message.setSender(guest);
-        message.setAuthorUsername(guest.getFirstName());
+        message.setAuthorUsername(guest.getUsername());
         messageRepo.save(message);
 
         return "redirect:/guestRequests";
