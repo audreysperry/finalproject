@@ -15,7 +15,7 @@
             <div class="booking-req" th:if="${space.active == true}">
                 <div class="clearfix bg-info space-info-req">
                     <h4>Your Space</h4>
-                    <img th:src="@{'/files/' + ${space.imagePath}}" class="space-img-req pull-left" alt=""/>
+                    <img th:src="@{'https://s3.us-east-2.amazonaws.com/staybleimageupload/' + ${space.imagePath}}" class="space-img-req pull-left" alt=""/>
                     <div>
                         <span th:text="${space.animalNumber}"></span>
                         <span> </span>
