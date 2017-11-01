@@ -328,7 +328,7 @@ public class BookSpaceController {
         message.setAuthorUsername(guest.getUsername());
         messageRepo.save(message);
 
-        
+
         return "redirect:/guestRequests";
     }
 }
